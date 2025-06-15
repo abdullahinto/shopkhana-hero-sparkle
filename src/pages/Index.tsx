@@ -5,6 +5,7 @@ import HotPicks from "@/components/HotPicks";
 import Testimonials from "@/components/Testimonials";
 import FinalCTA from "@/components/FinalCTA";
 import EmailOptIn from "@/components/EmailOptIn";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <Testimonials />
       <FinalCTA />
       <EmailOptIn />
+      <Footer />
     </div>
   );
 };
