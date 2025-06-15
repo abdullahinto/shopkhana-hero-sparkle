@@ -1,6 +1,8 @@
+
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import WhyShopKhana from "@/components/WhyShopKhana";
+import ShopByCategories from "@/components/ShopByCategories";
 import HotPicks from "@/components/HotPicks";
 import Testimonials from "@/components/Testimonials";
 import FinalCTA from "@/components/FinalCTA";
@@ -13,6 +15,7 @@ const Index = () => {
       <Header />
       <HeroSection />
       <WhyShopKhana />
+      <ShopByCategories />
       <HotPicks />
       <Testimonials />
       <FinalCTA />
