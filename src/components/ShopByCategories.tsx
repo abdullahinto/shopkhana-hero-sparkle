@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Shirt, Gem, Handbag, ShoppingBag, Zap } from "lucide-react";
+import { Sparkles, Shirt, Gem, ShoppingBag, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const categories = [
@@ -33,7 +33,7 @@ const categories = [
     id: "bags-accessories",
     name: "Bags & Accessories",
     subtext: "Complete your look 👜",
-    icon: Handbag,
+    icon: ShoppingBag,
     image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop&crop=center",
     badge: null
   },
