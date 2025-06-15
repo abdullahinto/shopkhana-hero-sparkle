@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -51,12 +52,14 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4 px-2 lg:px-0">
-              <Button 
-                size="lg" 
-                className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-black font-poppins font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25"
-              >
-                Shop Trending Picks 🛍️
-              </Button>
+              <Link to="/shop">
+                <Button 
+                  size="lg" 
+                  className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-black font-poppins font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25 w-full sm:w-auto"
+                >
+                  Shop Trending Picks 🛍️
+                </Button>
+              </Link>
               
               <Button 
                 variant="outline" 
@@ -92,23 +95,24 @@ const HeroSection = () => {
               {/* Glow Effect Behind Image */}
               <div className="absolute inset-0 bg-gradient-to-r from-shopkhana-yellow/20 to-pink-500/20 rounded-full blur-2xl sm:blur-3xl"></div>
               
-              {/* Hero Image */}
-              <div className="relative z-10 aspect-square rounded-full overflow-hidden border-2 sm:border-4 border-shopkhana-yellow/30 shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=600&h=600&fit=crop&crop=face"
-                  alt="Confident young woman showcasing ShopKhana's trendy fashion and accessories"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {/* Hero Image - Premium Product */}
+              <Link to="/product/1" className="block relative z-10">
+                <div className="relative aspect-square rounded-full overflow-hidden border-2 sm:border-4 border-shopkhana-yellow/30 shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105">
+                  <img 
+                    src="/lovable-uploads/6b20cb18-35d7-4d2f-900a-559270431bd0.png"
+                    alt="Premium product showcase - click to view details"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </Link>
 
               {/* Floating Product Badges */}
-              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg animate-bounce">
+              <Link 
+                to="/shop?category=new-arrivals" 
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg animate-bounce cursor-pointer transition-transform duration-200 hover:scale-110"
+              >
                 💄 New Arrivals
-              </div>
-              
-              <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 bg-black/80 text-shopkhana-yellow px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg border border-shopkhana-yellow/30">
-                💍 Trending Now
-              </div>
+              </Link>
             </div>
           </div>
         </div>
