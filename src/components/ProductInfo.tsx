@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Heart, Star, Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -35,6 +36,7 @@ const ProductInfo = ({
   isWishlisted,
   setIsWishlisted,
 }: ProductInfoProps) => {
+  const navigate = useNavigate();
   const formatPrice = (price: number) => `Rs. ${price.toLocaleString()}`;
 
   const renderStars = (rating: number) => {
@@ -66,6 +68,11 @@ const ProductInfo = ({
 
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(Math.max(1, quantity - 1));
+
+  const handleBuyNow = () => {
+    // In a real app, you'd add the item to cart first, then navigate to checkout
+    navigate('/checkout');
+  };
 
   const discountPercentage = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -178,7 +185,17 @@ const ProductInfo = ({
         <Button
           size="lg"
           disabled={!product.inStock}
+          onClick={handleBuyNow}
           className="w-full bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-semibold text-lg py-3 lg:py-4"
+        >
+          Buy Now
+        </Button>
+        
+        <Button
+          variant="outline"
+          size="lg"
+          disabled={!product.inStock}
+          className="w-full border-2 border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/10 font-semibold py-3 lg:py-4"
         >
           Add to Cart
         </Button>
