@@ -135,111 +135,115 @@ const Shop = () => {
   const displayedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white w-full overflow-x-hidden">
       <Header />
       
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
-        <div className="text-center mb-8">
-          <h1 className="font-poppins font-bold text-3xl md:text-4xl lg:text-5xl text-shopkhana-black mb-4">
-            Explore Our Glam Picks
-          </h1>
-          <p className="font-inter text-gray-600 text-lg max-w-2xl mx-auto">
-            Discover the latest in cosmetics, jewelry, and garments. Affordable glam for every desi girl.
-          </p>
-        </div>
-
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 border-2 border-gray-200 focus:border-shopkhana-yellow transition-colors"
-            />
-          </div>
-        </div>
-
-        {/* Filter Bar */}
-        <FilterBar
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-        />
-
-        {/* Results Count */}
-        <div className="mb-6">
-          <p className="font-inter text-gray-600">
-            Showing {displayedProducts.length} of {filteredProducts.length} products
-            {selectedCategory !== "All" && ` in ${selectedCategory}`}
-          </p>
-        </div>
-
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-          {displayedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {displayedProducts.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <Filter className="h-16 w-16 mx-auto" />
-            </div>
-            <h3 className="font-poppins font-semibold text-xl text-gray-600 mb-2">
-              No products found
-            </h3>
-            <p className="font-inter text-gray-500">
-              Try adjusting your search or filter criteria
+      <main className="w-full">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl">
+          {/* Page Header */}
+          <div className="text-center mb-6 sm:mb-8 px-2">
+            <h1 className="font-poppins font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-shopkhana-black mb-3 sm:mb-4 leading-tight">
+              Explore Our Glam Picks
+            </h1>
+            <p className="font-inter text-gray-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+              Discover the latest in cosmetics, jewelry, and garments. Affordable glam for every desi girl.
             </p>
           </div>
-        )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center space-x-2">
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black"
-            >
-              Previous
-            </Button>
-            
-            <div className="flex space-x-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  onClick={() => setCurrentPage(page)}
-                  className={
-                    currentPage === page
-                      ? "bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/80"
-                      : "border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black"
-                  }
-                >
-                  {page}
-                </Button>
-              ))}
+          {/* Search Bar */}
+          <div className="mb-4 sm:mb-6">
+            <div className="relative max-w-sm sm:max-w-md mx-auto px-2">
+              <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 sm:h-5 sm:w-5" />
+              <Input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 sm:pl-12 h-10 sm:h-12 border-2 border-gray-200 focus:border-shopkhana-yellow transition-colors text-sm sm:text-base w-full"
+              />
             </div>
-            
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black"
-            >
-              Next
-            </Button>
           </div>
-        )}
+
+          {/* Filter Bar */}
+          <div className="mb-4 sm:mb-6">
+            <FilterBar
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+            />
+          </div>
+
+          {/* Results Count */}
+          <div className="mb-4 sm:mb-6 px-2">
+            <p className="font-inter text-gray-600 text-sm sm:text-base">
+              Showing {displayedProducts.length} of {filteredProducts.length} products
+              {selectedCategory !== "All" && ` in ${selectedCategory}`}
+            </p>
+          </div>
+
+          {/* Product Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-6 sm:mb-8 px-1">
+            {displayedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {displayedProducts.length === 0 && (
+            <div className="text-center py-8 sm:py-12 px-4">
+              <div className="text-gray-400 mb-4">
+                <Filter className="h-12 w-12 sm:h-16 sm:w-16 mx-auto" />
+              </div>
+              <h3 className="font-poppins font-semibold text-lg sm:text-xl text-gray-600 mb-2">
+                No products found
+              </h3>
+              <p className="font-inter text-gray-500 text-sm sm:text-base">
+                Try adjusting your search or filter criteria
+              </p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-2 px-2">
+              <Button
+                variant="outline"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="w-full sm:w-auto border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black text-sm sm:text-base px-4 sm:px-6"
+              >
+                Previous
+              </Button>
+              
+              <div className="flex space-x-1 sm:space-x-2 overflow-x-auto max-w-full">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    onClick={() => setCurrentPage(page)}
+                    className={`flex-shrink-0 text-sm sm:text-base px-3 sm:px-4 ${
+                      currentPage === page
+                        ? "bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/80"
+                        : "border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black"
+                    }`}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </div>
+              
+              <Button
+                variant="outline"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="w-full sm:w-auto border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow hover:text-shopkhana-black text-sm sm:text-base px-4 sm:px-6"
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </div>
       </main>
 
       <Footer />
