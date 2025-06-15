@@ -88,7 +88,7 @@ const EmailOptIn = () => {
               <Checkbox
                 id="earlyAccess"
                 checked={earlyAccess}
-                onCheckedChange={setEarlyAccess}
+                onCheckedChange={(checked) => setEarlyAccess(checked === true)}
                 className="border-2 border-shopkhana-yellow data-[state=checked]:bg-shopkhana-yellow data-[state=checked]:border-shopkhana-yellow"
               />
               <label
