@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import AuthModal from "./AuthModal";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const cartItemCount = 3;
   const wishlistItemCount = 2;
 
@@ -17,6 +20,11 @@ const Header = () => {
     { name: "About", href: "#" },
     { name: "Contact", href: "#" }
   ];
+
+  const handleAuthClick = (mode: "login" | "signup") => {
+    setAuthMode(mode);
+    setIsAuthModalOpen(true);
+  };
 
   return (
     <TooltipProvider>
@@ -127,6 +135,7 @@ const Header = () => {
                     size="icon"
                     className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="My Account"
+                    onClick={() => handleAuthClick("login")}
                   >
                     <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
@@ -181,6 +190,29 @@ const Header = () => {
                         ))}
                       </nav>
 
+                      {/* Mobile Auth Buttons */}
+                      <div className="space-y-3 py-6 border-t border-shopkhana-yellow/20">
+                        <Button
+                          onClick={() => {
+                            handleAuthClick("login");
+                            setIsOpen(false);
+                          }}
+                          className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-inter font-semibold"
+                        >
+                          Sign In
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleAuthClick("signup");
+                            setIsOpen(false);
+                          }}
+                          variant="outline"
+                          className="w-full border-shopkhana-yellow text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-shopkhana-black font-inter font-semibold"
+                        >
+                          Sign Up
+                        </Button>
+                      </div>
+
                       {/* Mobile Menu Footer */}
                       <div className="mt-auto py-6 border-t border-shopkhana-yellow/20">
                         <p className="font-inter text-sm text-gray-400 text-center">
@@ -198,6 +230,13 @@ const Header = () => {
         {/* Bottom glow effect */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-shopkhana-yellow to-transparent opacity-50"></div>
       </header>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialMode={authMode}
+      />
     </TooltipProvider>
   );
 };
