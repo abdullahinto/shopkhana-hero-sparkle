@@ -1,387 +1,597 @@
 
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Lock, CreditCard, Smartphone, Truck, ShoppingBag, Edit } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Accordion, 
+  AccordionContent, 
+  AccordionItem, 
+  AccordionTrigger 
+} from "@/components/ui/accordion";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ArrowLeft, Lock, CreditCard, Truck, MapPin, Edit3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const [expandedSection, setExpandedSection] = useState('customer-info');
-  const [deliveryMethod, setDeliveryMethod] = useState('standard');
-  const [paymentMethod, setPaymentMethod] = useState('cod');
-  const [promoCode, setPromoCode] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "Pakistan",
+    deliveryMethod: "standard",
+    paymentMethod: "cod",
+    promoCode: ""
+  });
 
-  // Mock cart items
+  // Sample cart items
   const cartItems = [
-    { id: 1, name: 'Matte Lipstick - Ruby Red', price: 899, quantity: 2, image: '/placeholder.svg' },
-    { id: 2, name: 'Gold Chain Necklace', price: 2499, quantity: 1, image: '/placeholder.svg' },
+    { id: 1, name: "Rose Gold Lipstick Set", price: 2499, quantity: 2, image: "/placeholder.svg" },
+    { id: 2, name: "Silk Evening Dress", price: 8999, quantity: 1, image: "/placeholder.svg" }
   ];
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shippingCost = deliveryMethod === 'express' ? 300 : 150;
-  const discount = promoCode === 'SAVE10' ? Math.round(subtotal * 0.1) : 0;
+  const shippingCost = formData.deliveryMethod === "express" ? 299 : 149;
+  const discount = 0;
   const total = subtotal + shippingCost - discount;
 
-  const handleSectionToggle = (section: string) => {
-    setExpandedSection(expandedSection === section ? '' : section);
-  };
-
-  const handlePlaceOrder = () => {
-    alert('Order placed successfully! 🎉');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Navigate to thank you page
+    navigate('/thank-you');
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-40">
-        <div className="container py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="font-poppins text-2xl font-bold">Checkout</h1>
-            <button 
-              onClick={() => navigate('/cart')}
-              className="flex items-center gap-2 text-sm text-gray-600 hover:text-black"
-            >
-              <Edit size={16} />
-              Edit Cart
-            </button>
+      <div className="container mx-auto px-4 py-6 lg:py-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-6">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => navigate('/cart')}
+            className="lg:hidden"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <div>
+            <h1 className="font-poppins font-bold text-2xl lg:text-3xl">Checkout</h1>
+            <p className="text-gray-600">Complete your purchase</p>
           </div>
-          
-          {/* Progress Bar */}
-          <div className="flex items-center gap-2 mt-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#FFE75E] rounded-full flex items-center justify-center text-black font-medium text-sm">✓</div>
-              <span className="text-sm font-medium">Cart</span>
+        </div>
+
+        {/* Progress Bar - Desktop */}
+        <div className="hidden lg:flex items-center justify-center mb-8">
+          <div className="flex items-center space-x-8">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-black font-bold">1</div>
+              <span className="ml-2 text-gray-500">Cart</span>
             </div>
-            <div className="w-8 h-0.5 bg-[#FFE75E]"></div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#FFE75E] rounded-full flex items-center justify-center text-black font-medium text-sm">2</div>
-              <span className="text-sm font-medium">Checkout</span>
+            <div className="w-16 h-0.5 bg-yellow-400"></div>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-black font-bold">2</div>
+              <span className="ml-2 font-medium">Checkout</span>
             </div>
-            <div className="w-8 h-0.5 bg-gray-200"></div>
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-medium text-sm">3</div>
-              <span className="text-sm text-gray-500">Complete</span>
+            <div className="w-16 h-0.5 bg-gray-300"></div>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-500">3</div>
+              <span className="ml-2 text-gray-500">Complete</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="container py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Form */}
-          <div className="lg:col-span-2 space-y-6">
-            
-            {/* Customer Information */}
-            <Collapsible 
-              open={expandedSection === 'customer-info'} 
-              onOpenChange={() => handleSectionToggle('customer-info')}
-            >
-              <div className="bg-white rounded-lg border">
-                <CollapsibleTrigger className="w-full p-6 flex items-center justify-between hover:bg-gray-50">
-                  <h2 className="font-poppins text-xl font-semibold">Customer Information</h2>
-                  {expandedSection === 'customer-info' ? <ChevronUp /> : <ChevronDown />}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="px-6 pb-6 space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Mobile Accordion Layout */}
+              <div className="lg:hidden">
+                <Accordion type="single" collapsible defaultValue="customer-info">
+                  <AccordionItem value="customer-info">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Customer Information
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4 pt-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="firstName">First Name</Label>
+                            <Input 
+                              id="firstName" 
+                              value={formData.firstName}
+                              onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                              required 
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="lastName">Last Name</Label>
+                            <Input 
+                              id="lastName" 
+                              value={formData.lastName}
+                              onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                              required 
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Email</Label>
+                          <Input 
+                            id="email" 
+                            type="email" 
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            required 
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="phone">Phone Number</Label>
+                          <Input 
+                            id="phone" 
+                            type="tel" 
+                            value={formData.phone}
+                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                            required 
+                          />
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="shipping">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Shipping Address
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="space-y-4 pt-4">
+                        <div>
+                          <Label htmlFor="street">Street Address</Label>
+                          <Input 
+                            id="street" 
+                            value={formData.street}
+                            onChange={(e) => setFormData({...formData, street: e.target.value})}
+                            required 
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="city">City</Label>
+                            <Input 
+                              id="city" 
+                              value={formData.city}
+                              onChange={(e) => setFormData({...formData, city: e.target.value})}
+                              required 
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="state">State/Province</Label>
+                            <Input 
+                              id="state" 
+                              value={formData.state}
+                              onChange={(e) => setFormData({...formData, state: e.target.value})}
+                              required 
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor="postalCode">Postal Code</Label>
+                            <Input 
+                              id="postalCode" 
+                              value={formData.postalCode}
+                              onChange={(e) => setFormData({...formData, postalCode: e.target.value})}
+                              required 
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="country">Country</Label>
+                            <Select value={formData.country} onValueChange={(value) => setFormData({...formData, country: value})}>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Pakistan">Pakistan</SelectItem>
+                                <SelectItem value="India">India</SelectItem>
+                                <SelectItem value="Bangladesh">Bangladesh</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="delivery">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Delivery Method
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <RadioGroup 
+                        value={formData.deliveryMethod} 
+                        onValueChange={(value) => setFormData({...formData, deliveryMethod: value})}
+                        className="pt-4"
+                      >
+                        <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                          <RadioGroupItem value="standard" id="standard" />
+                          <Label htmlFor="standard" className="flex-1 cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="font-medium">Standard Delivery</p>
+                                <p className="text-sm text-gray-600">3-5 business days</p>
+                              </div>
+                              <span className="font-semibold">Rs. 149</span>
+                            </div>
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                          <RadioGroupItem value="express" id="express" />
+                          <Label htmlFor="express" className="flex-1 cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="font-medium">Express Delivery</p>
+                                <p className="text-sm text-gray-600">1-2 business days</p>
+                              </div>
+                              <span className="font-semibold">Rs. 299</span>
+                            </div>
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="payment">
+                    <AccordionTrigger className="text-lg font-semibold">
+                      Payment Method
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <RadioGroup 
+                        value={formData.paymentMethod} 
+                        onValueChange={(value) => setFormData({...formData, paymentMethod: value})}
+                        className="pt-4"
+                      >
+                        <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                          <RadioGroupItem value="cod" id="cod" />
+                          <Label htmlFor="cod" className="flex-1 cursor-pointer">Cash on Delivery</Label>
+                        </div>
+                        <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                          <RadioGroupItem value="jazzcash" id="jazzcash" />
+                          <Label htmlFor="jazzcash" className="flex-1 cursor-pointer">JazzCash / EasyPaisa</Label>
+                        </div>
+                        <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                          <RadioGroupItem value="card" id="card" />
+                          <Label htmlFor="card" className="flex-1 cursor-pointer">Debit/Credit Card</Label>
+                        </div>
+                      </RadioGroup>
+                      
+                      <div className="mt-4">
+                        <Label htmlFor="promoCode">Promo Code (Optional)</Label>
+                        <div className="flex gap-2">
+                          <Input 
+                            id="promoCode" 
+                            placeholder="Enter promo code"
+                            value={formData.promoCode}
+                            onChange={(e) => setFormData({...formData, promoCode: e.target.value})}
+                          />
+                          <Button type="button" variant="outline">Apply</Button>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+
+              {/* Desktop Layout */}
+              <div className="hidden lg:block space-y-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5" />
+                      Customer Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" placeholder="Enter your first name" />
+                        <Input 
+                          id="firstName" 
+                          value={formData.firstName}
+                          onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                          required 
+                        />
                       </div>
                       <div>
                         <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" placeholder="Enter your last name" />
+                        <Input 
+                          id="lastName" 
+                          value={formData.lastName}
+                          onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                          required 
+                        />
                       </div>
                     </div>
                     <div>
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="your.email@example.com" />
+                      <Input 
+                        id="email" 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        required 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" type="tel" placeholder="+92 300 1234567" />
+                      <Input 
+                        id="phone" 
+                        type="tel" 
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        required 
+                      />
                     </div>
-                    
-                    <h3 className="font-poppins text-lg font-medium mt-6 mb-4">Shipping Address</h3>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5" />
+                      Shipping Address
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
                     <div>
-                      <Label htmlFor="address">Street Address</Label>
-                      <Input id="address" placeholder="House no, street, area" />
+                      <Label htmlFor="street">Street Address</Label>
+                      <Input 
+                        id="street" 
+                        value={formData.street}
+                        onChange={(e) => setFormData({...formData, street: e.target.value})}
+                        required 
+                      />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="city">City</Label>
-                        <Input id="city" placeholder="Karachi" />
+                        <Input 
+                          id="city" 
+                          value={formData.city}
+                          onChange={(e) => setFormData({...formData, city: e.target.value})}
+                          required 
+                        />
                       </div>
                       <div>
                         <Label htmlFor="state">State/Province</Label>
-                        <Select>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select state" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="sindh">Sindh</SelectItem>
-                            <SelectItem value="punjab">Punjab</SelectItem>
-                            <SelectItem value="kpk">KPK</SelectItem>
-                            <SelectItem value="balochistan">Balochistan</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Input 
+                          id="state" 
+                          value={formData.state}
+                          onChange={(e) => setFormData({...formData, state: e.target.value})}
+                          required 
+                        />
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="postal">Postal Code</Label>
-                        <Input id="postal" placeholder="75300" />
+                        <Label htmlFor="postalCode">Postal Code</Label>
+                        <Input 
+                          id="postalCode" 
+                          value={formData.postalCode}
+                          onChange={(e) => setFormData({...formData, postalCode: e.target.value})}
+                          required 
+                        />
                       </div>
                       <div>
                         <Label htmlFor="country">Country</Label>
-                        <Select defaultValue="pakistan">
+                        <Select value={formData.country} onValueChange={(value) => setFormData({...formData, country: value})}>
                           <SelectTrigger>
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="pakistan">Pakistan</SelectItem>
+                            <SelectItem value="Pakistan">Pakistan</SelectItem>
+                            <SelectItem value="India">India</SelectItem>
+                            <SelectItem value="Bangladesh">Bangladesh</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
-                  </div>
-                </CollapsibleContent>
-              </div>
-            </Collapsible>
+                  </CardContent>
+                </Card>
 
-            {/* Delivery Method */}
-            <Collapsible 
-              open={expandedSection === 'delivery'} 
-              onOpenChange={() => handleSectionToggle('delivery')}
-            >
-              <div className="bg-white rounded-lg border">
-                <CollapsibleTrigger className="w-full p-6 flex items-center justify-between hover:bg-gray-50">
-                  <h2 className="font-poppins text-xl font-semibold">Delivery Method</h2>
-                  {expandedSection === 'delivery' ? <ChevronUp /> : <ChevronDown />}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="px-6 pb-6">
-                    <RadioGroup value={deliveryMethod} onValueChange={setDeliveryMethod}>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3 p-4 border rounded-lg hover:border-[#FFE75E] cursor-pointer">
-                          <RadioGroupItem value="standard" id="standard" />
-                          <div className="flex-1">
-                            <Label htmlFor="standard" className="cursor-pointer">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                  <Truck className="text-gray-600" size={20} />
-                                  <div>
-                                    <p className="font-medium">Standard Delivery</p>
-                                    <p className="text-sm text-gray-600">3-5 business days</p>
-                                  </div>
-                                </div>
-                                <span className="font-medium">Rs. 150</span>
-                              </div>
-                            </Label>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Truck className="w-5 h-5" />
+                      Delivery Method
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <RadioGroup 
+                      value={formData.deliveryMethod} 
+                      onValueChange={(value) => setFormData({...formData, deliveryMethod: value})}
+                      className="space-y-3"
+                    >
+                      <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                        <RadioGroupItem value="standard" id="standard" />
+                        <Label htmlFor="standard" className="flex-1 cursor-pointer">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-medium">Standard Delivery</p>
+                              <p className="text-sm text-gray-600">3-5 business days</p>
+                            </div>
+                            <span className="font-semibold">Rs. 149</span>
                           </div>
-                        </div>
-                        
-                        <div className="flex items-center space-x-3 p-4 border rounded-lg hover:border-[#FFE75E] cursor-pointer">
-                          <RadioGroupItem value="express" id="express" />
-                          <div className="flex-1">
-                            <Label htmlFor="express" className="cursor-pointer">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                  <Truck className="text-gray-600" size={20} />
-                                  <div>
-                                    <p className="font-medium">Express Delivery</p>
-                                    <p className="text-sm text-gray-600">1-2 business days</p>
-                                  </div>
-                                </div>
-                                <span className="font-medium">Rs. 300</span>
-                              </div>
-                            </Label>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                        <RadioGroupItem value="express" id="express" />
+                        <Label htmlFor="express" className="flex-1 cursor-pointer">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-medium">Express Delivery</p>
+                              <p className="text-sm text-gray-600">1-2 business days</p>
+                            </div>
+                            <span className="font-semibold">Rs. 299</span>
                           </div>
-                        </div>
+                        </Label>
                       </div>
                     </RadioGroup>
-                  </div>
-                </CollapsibleContent>
-              </div>
-            </Collapsible>
+                  </CardContent>
+                </Card>
 
-            {/* Payment Method */}
-            <Collapsible 
-              open={expandedSection === 'payment'} 
-              onOpenChange={() => handleSectionToggle('payment')}
-            >
-              <div className="bg-white rounded-lg border">
-                <CollapsibleTrigger className="w-full p-6 flex items-center justify-between hover:bg-gray-50">
-                  <h2 className="font-poppins text-xl font-semibold">Payment Method</h2>
-                  {expandedSection === 'payment' ? <ChevronUp /> : <ChevronDown />}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="px-6 pb-6">
-                    <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-3 p-4 border rounded-lg hover:border-[#FFE75E] cursor-pointer">
-                          <RadioGroupItem value="cod" id="cod" />
-                          <div className="flex-1">
-                            <Label htmlFor="cod" className="cursor-pointer">
-                              <div className="flex items-center gap-3">
-                                <ShoppingBag className="text-gray-600" size={20} />
-                                <div>
-                                  <p className="font-medium">Cash on Delivery</p>
-                                  <p className="text-sm text-gray-600">Pay when you receive your order</p>
-                                </div>
-                              </div>
-                            </Label>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center space-x-3 p-4 border rounded-lg hover:border-[#FFE75E] cursor-pointer">
-                          <RadioGroupItem value="jazzcash" id="jazzcash" />
-                          <div className="flex-1">
-                            <Label htmlFor="jazzcash" className="cursor-pointer">
-                              <div className="flex items-center gap-3">
-                                <Smartphone className="text-gray-600" size={20} />
-                                <div>
-                                  <p className="font-medium">JazzCash / EasyPaisa</p>
-                                  <p className="text-sm text-gray-600">Mobile wallet payment</p>
-                                </div>
-                              </div>
-                            </Label>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center space-x-3 p-4 border rounded-lg hover:border-[#FFE75E] cursor-pointer">
-                          <RadioGroupItem value="card" id="card" />
-                          <div className="flex-1">
-                            <Label htmlFor="card" className="cursor-pointer">
-                              <div className="flex items-center gap-3">
-                                <CreditCard className="text-gray-600" size={20} />
-                                <div>
-                                  <p className="font-medium">Debit / Credit Card</p>
-                                  <p className="text-sm text-gray-600">Visa, Mastercard accepted</p>
-                                </div>
-                              </div>
-                            </Label>
-                          </div>
-                        </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CreditCard className="w-5 h-5" />
+                      Payment Method
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <RadioGroup 
+                      value={formData.paymentMethod} 
+                      onValueChange={(value) => setFormData({...formData, paymentMethod: value})}
+                      className="space-y-3"
+                    >
+                      <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                        <RadioGroupItem value="cod" id="cod" />
+                        <Label htmlFor="cod" className="flex-1 cursor-pointer">Cash on Delivery</Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                        <RadioGroupItem value="jazzcash" id="jazzcash" />
+                        <Label htmlFor="jazzcash" className="flex-1 cursor-pointer">JazzCash / EasyPaisa</Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-4 border rounded-lg">
+                        <RadioGroupItem value="card" id="card" />
+                        <Label htmlFor="card" className="flex-1 cursor-pointer">Debit/Credit Card</Label>
                       </div>
                     </RadioGroup>
                     
-                    {/* Promo Code */}
-                    <div className="mt-6 pt-6 border-t">
-                      <Label htmlFor="promo">Promo Code (Optional)</Label>
-                      <div className="flex gap-2 mt-2">
+                    <div>
+                      <Label htmlFor="promoCode">Promo Code (Optional)</Label>
+                      <div className="flex gap-2">
                         <Input 
-                          id="promo" 
-                          placeholder="Enter promo code" 
-                          value={promoCode}
-                          onChange={(e) => setPromoCode(e.target.value)}
+                          id="promoCode" 
+                          placeholder="Enter promo code"
+                          value={formData.promoCode}
+                          onChange={(e) => setFormData({...formData, promoCode: e.target.value})}
                         />
-                        <Button variant="outline">Apply</Button>
+                        <Button type="button" variant="outline">Apply</Button>
                       </div>
-                      {promoCode === 'SAVE10' && (
-                        <p className="text-sm text-green-600 mt-2">✓ 10% discount applied!</p>
-                      )}
                     </div>
-                  </div>
-                </CollapsibleContent>
+                  </CardContent>
+                </Card>
               </div>
-            </Collapsible>
+            </form>
           </div>
 
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border p-6 sticky top-24">
-              <h3 className="font-poppins text-xl font-semibold mb-4">Order Summary</h3>
-              
-              {/* Cart Items */}
-              <div className="space-y-4 mb-6">
+            <Card className="sticky top-6">
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  Order Summary
+                  <Button variant="ghost" size="sm" onClick={() => navigate('/cart')}>
+                    <Edit3 className="w-4 h-4 mr-2" />
+                    Edit Cart
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex gap-3">
                     <img 
                       src={item.image} 
                       alt={item.name}
-                      className="w-16 h-16 object-cover rounded-lg bg-gray-100"
+                      className="w-16 h-16 object-cover rounded-lg"
                     />
                     <div className="flex-1">
-                      <p className="font-medium text-sm">{item.name}</p>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                      <p className="font-medium">Rs. {item.price * item.quantity}</p>
+                      <h3 className="font-medium text-sm">{item.name}</h3>
+                      <p className="text-gray-600 text-sm">Qty: {item.quantity}</p>
+                      <p className="font-semibold text-sm">Rs. {item.price.toLocaleString()}</p>
                     </div>
                   </div>
                 ))}
-              </div>
-              
-              {/* Summary */}
-              <div className="space-y-3 border-t pt-4">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>Rs. {subtotal}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>Rs. {shippingCost}</span>
-                </div>
-                {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
-                    <span>-Rs. {discount}</span>
-                  </div>
-                )}
-                <div className="flex justify-between font-bold text-lg border-t pt-3">
-                  <span>Total</span>
-                  <span>Rs. {total}</span>
-                </div>
-              </div>
-              
-              {/* Trust Elements */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <Lock size={16} className="text-green-600" />
-                  <span className="text-sm font-medium">Secure checkout</span>
-                </div>
-                <p className="text-xs text-gray-600">We'll never share your info. Promise! 🔒</p>
                 
-                <div className="flex items-center gap-4 mt-3">
-                  <div className="text-xs">💳 Visa</div>
-                  <div className="text-xs">📱 JazzCash</div>
-                  <div className="text-xs">💰 EasyPaisa</div>
+                <Separator />
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>Rs. {subtotal.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>Rs. {shippingCost}</span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Discount</span>
+                      <span>-Rs. {discount}</span>
+                    </div>
+                  )}
+                  <Separator />
+                  <div className="flex justify-between font-semibold text-lg">
+                    <span>Total</span>
+                    <span>Rs. {total.toLocaleString()}</span>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Desktop Place Order Button */}
-              <Button 
-                onClick={handlePlaceOrder}
-                className="w-full mt-6 bg-[#FFE75E] hover:bg-[#FFE75E]/90 text-black font-semibold py-3 hidden lg:flex"
-              >
-                Place Order - Rs. {total}
-              </Button>
-            </div>
+
+                <Button 
+                  type="submit" 
+                  onClick={handleSubmit}
+                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 text-lg"
+                >
+                  Place Order
+                </Button>
+
+                {/* Trust Indicators */}
+                <div className="pt-4 border-t space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Lock className="w-4 h-4" />
+                    <span>Secure checkout powered by Firebase</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Badge variant="outline" className="text-xs">COD</Badge>
+                    <Badge variant="outline" className="text-xs">JazzCash</Badge>
+                    <Badge variant="outline" className="text-xs">Cards</Badge>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    We'll never share your info. Promise! 🤝
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
 
-      {/* Mobile Sticky CTA */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50">
+      {/* Mobile Sticky Bottom Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-medium">Total</span>
-          <span className="font-bold text-lg">Rs. {total}</span>
+          <span className="font-semibold">Total: Rs. {total.toLocaleString()}</span>
         </div>
         <Button 
-          onClick={handlePlaceOrder}
-          className="w-full bg-[#FFE75E] hover:bg-[#FFE75E]/90 text-black font-semibold py-3"
+          type="submit" 
+          onClick={handleSubmit}
+          className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3"
         >
           Place Order
         </Button>
       </div>
-
-      {/* Mobile bottom spacing */}
-      <div className="lg:hidden h-24"></div>
     </div>
   );
 };
