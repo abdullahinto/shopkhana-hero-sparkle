@@ -2,8 +2,8 @@
 import HeroSection from "@/components/HeroSection";
 import WhyShopKhana from "@/components/WhyShopKhana";
 import HotPicks from "@/components/HotPicks";
-import EmailOptIn from "@/components/EmailOptIn";
 import Testimonials from "@/components/Testimonials";
+import EmailOptIn from "@/components/EmailOptIn";
 
 const Index = () => {
   return (
@@ -11,8 +11,8 @@ const Index = () => {
       <HeroSection />
       <WhyShopKhana />
       <HotPicks />
-      <EmailOptIn />
       <Testimonials />
+      <EmailOptIn />
     </div>
   );
 };
