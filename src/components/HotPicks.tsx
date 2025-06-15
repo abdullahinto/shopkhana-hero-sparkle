@@ -1,5 +1,6 @@
 
 import { Star, Heart, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -87,6 +88,18 @@ const HotPicks = () => {
     ));
   };
 
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Add wishlist logic here
+  };
+
+  const handleAddToCartClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Add to cart logic here
+  };
+
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background Glow Effects */}
@@ -115,70 +128,75 @@ const HotPicks = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
           {products.map((product, index) => (
-            <Card 
-              key={product.id}
-              className="group bg-white border-gray-200 hover:border-shopkhana-yellow/30 hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up overflow-hidden"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <CardContent className="p-0">
-                {/* Product Image */}
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  {/* Badge */}
-                  <Badge 
-                    className={`absolute top-3 left-3 ${product.badgeColor} font-poppins font-semibold text-xs px-2 py-1`}
-                  >
-                    {product.badge}
-                  </Badge>
-                  {/* Heart Icon */}
-                  <button className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors group">
-                    <Heart className="w-4 h-4 text-gray-600 group-hover:text-shopkhana-yellow group-hover:fill-shopkhana-yellow transition-colors" />
-                  </button>
-                </div>
-
-                {/* Product Info */}
-                <div className="p-4 sm:p-5">
-                  {/* Rating */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex gap-0.5">
-                      {renderStars(product.rating)}
-                    </div>
-                    <span className="font-inter text-xs text-gray-500">
-                      {product.rating} ({product.reviews})
-                    </span>
+            <Link key={product.id} to={`/product/${product.id}`} className="block">
+              <Card 
+                className="group bg-white border-gray-200 hover:border-shopkhana-yellow/30 hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in-up overflow-hidden cursor-pointer"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-0">
+                  {/* Product Image */}
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-48 sm:h-56 lg:h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    {/* Badge */}
+                    <Badge 
+                      className={`absolute top-3 left-3 ${product.badgeColor} font-poppins font-semibold text-xs px-2 py-1`}
+                    >
+                      {product.badge}
+                    </Badge>
+                    {/* Heart Icon */}
+                    <button 
+                      onClick={handleWishlistClick}
+                      className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors group"
+                    >
+                      <Heart className="w-4 h-4 text-gray-600 group-hover:text-shopkhana-yellow group-hover:fill-shopkhana-yellow transition-colors" />
+                    </button>
                   </div>
 
-                  {/* Product Name */}
-                  <h4 className="font-poppins font-semibold text-shopkhana-black text-sm sm:text-base mb-3 line-clamp-2 leading-tight">
-                    {product.name}
-                  </h4>
-
-                  {/* Price */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="font-poppins font-bold text-shopkhana-black text-lg">
-                      {product.price}
-                    </span>
-                    {product.originalPrice && (
-                      <span className="font-inter text-sm text-gray-500 line-through">
-                        {product.originalPrice}
+                  {/* Product Info */}
+                  <div className="p-4 sm:p-5">
+                    {/* Rating */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex gap-0.5">
+                        {renderStars(product.rating)}
+                      </div>
+                      <span className="font-inter text-xs text-gray-500">
+                        {product.rating} ({product.reviews})
                       </span>
-                    )}
-                  </div>
+                    </div>
 
-                  {/* Add to Cart Button */}
-                  <Button 
-                    className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-semibold text-sm py-2.5 transition-all duration-200 hover:shadow-lg"
-                  >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                    {/* Product Name */}
+                    <h4 className="font-poppins font-semibold text-shopkhana-black text-sm sm:text-base mb-3 line-clamp-2 leading-tight">
+                      {product.name}
+                    </h4>
+
+                    {/* Price */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="font-poppins font-bold text-shopkhana-black text-lg">
+                        {product.price}
+                      </span>
+                      {product.originalPrice && (
+                        <span className="font-inter text-sm text-gray-500 line-through">
+                          {product.originalPrice}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Add to Cart Button */}
+                    <Button 
+                      onClick={handleAddToCartClick}
+                      className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-semibold text-sm py-2.5 transition-all duration-200 hover:shadow-lg"
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Add to Cart
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
