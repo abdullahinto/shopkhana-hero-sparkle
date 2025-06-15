@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search, ShoppingCart, Menu, X, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,8 +12,8 @@ const Header = () => {
   const wishlistItemCount = 2; // This would come from wishlist state in a real app
 
   const navigationLinks = [
-    { name: "Home", href: "#" },
-    { name: "Shop", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/shop" },
     { name: "About", href: "#" },
     { name: "Contact", href: "#" }
   ];
@@ -25,7 +26,7 @@ const Header = () => {
             
             {/* Left Side - Logo */}
             <div className="flex-shrink-0">
-              <a href="#" className="flex items-center">
+              <a href="/" className="flex items-center">
                 <h1 className="font-poppins font-bold text-2xl lg:text-3xl text-shopkhana-yellow hover:scale-105 transition-transform duration-200">
                   ShopKhana
                 </h1>
