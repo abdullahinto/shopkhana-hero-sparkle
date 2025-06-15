@@ -8,8 +8,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const cartItemCount = 3; // This would come from cart state in a real app
-  const wishlistItemCount = 2; // This would come from wishlist state in a real app
+  const cartItemCount = 3;
+  const wishlistItemCount = 2;
 
   const navigationLinks = [
     { name: "Home", href: "/" },
@@ -22,12 +22,12 @@ const Header = () => {
     <TooltipProvider>
       <header className="sticky top-0 z-50 w-full bg-shopkhana-black border-b border-shopkhana-yellow/20 shadow-lg">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             
             {/* Left Side - Logo */}
             <div className="flex-shrink-0">
               <a href="/" className="flex items-center">
-                <h1 className="font-poppins font-bold text-2xl lg:text-3xl text-shopkhana-yellow hover:scale-105 transition-transform duration-200">
+                <h1 className="font-poppins font-bold text-xl sm:text-2xl lg:text-3xl text-shopkhana-yellow hover:scale-105 transition-transform duration-200">
                   ShopKhana
                 </h1>
               </a>
@@ -48,7 +48,7 @@ const Header = () => {
             </nav>
 
             {/* Right Side - Icons */}
-            <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               
               {/* Search Icon */}
               <Tooltip>
@@ -56,10 +56,10 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200"
+                    className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="Search"
                   >
-                    <Search className="h-5 w-5" />
+                    <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -73,14 +73,14 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="relative text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200"
+                    className="relative text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="Wishlist"
                   >
-                    <Heart className="h-5 w-5" />
+                    <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
                     {wishlistItemCount > 0 && (
                       <Badge 
                         variant="destructive" 
-                        className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-shopkhana-yellow text-shopkhana-black font-bold"
+                        className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-xs bg-shopkhana-yellow text-shopkhana-black font-bold"
                       >
                         {wishlistItemCount}
                       </Badge>
@@ -98,14 +98,14 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="relative text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200"
+                    className="relative text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="Shopping Cart"
                   >
-                    <ShoppingCart className="h-5 w-5" />
+                    <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                     {cartItemCount > 0 && (
                       <Badge 
                         variant="destructive" 
-                        className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-shopkhana-yellow text-shopkhana-black font-bold"
+                        className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-xs bg-shopkhana-yellow text-shopkhana-black font-bold"
                       >
                         {cartItemCount}
                       </Badge>
@@ -123,10 +123,10 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200"
+                    className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="My Account"
                   >
-                    <User className="h-5 w-5" />
+                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -141,13 +141,13 @@ const Header = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200"
+                      className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                       aria-label="Menu"
                     >
-                      <Menu className="h-6 w-6" />
+                      <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="right" className="w-[280px] sm:w-[350px] bg-shopkhana-black border-l border-shopkhana-yellow/20">
+                  <SheetContent side="right" className="w-[280px] sm:w-[300px] bg-shopkhana-black border-l border-shopkhana-yellow/20">
                     <div className="flex flex-col h-full">
                       
                       {/* Mobile Menu Header */}
@@ -166,7 +166,7 @@ const Header = () => {
                       </div>
 
                       {/* Mobile Navigation Links */}
-                      <nav className="flex flex-col space-y-4 py-6">
+                      <nav className="flex flex-col space-y-2 py-6">
                         {navigationLinks.map((link) => (
                           <a
                             key={link.name}
