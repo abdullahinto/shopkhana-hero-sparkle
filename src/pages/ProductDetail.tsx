@@ -82,10 +82,19 @@ const ProductDetail = () => {
         {/* Product Details Tabs */}
         <div className="mb-8 lg:mb-12">
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              <TabsTrigger value="details" className="text-sm lg:text-base">Product Details</TabsTrigger>
-              <TabsTrigger value="delivery" className="text-sm lg:text-base">Delivery & Returns</TabsTrigger>
-              <TabsTrigger value="reviews" className="text-sm lg:text-base">Reviews ({product.reviewCount})</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 mb-6 h-auto">
+              <TabsTrigger value="details" className="text-xs sm:text-sm lg:text-base px-2 py-2 leading-tight">
+                <span className="hidden sm:inline">Product Details</span>
+                <span className="sm:hidden">Details</span>
+              </TabsTrigger>
+              <TabsTrigger value="delivery" className="text-xs sm:text-sm lg:text-base px-2 py-2 leading-tight">
+                <span className="hidden sm:inline">Delivery & Returns</span>
+                <span className="sm:hidden">Delivery</span>
+              </TabsTrigger>
+              <TabsTrigger value="reviews" className="text-xs sm:text-sm lg:text-base px-2 py-2 leading-tight">
+                <span className="hidden sm:inline">Reviews ({product.reviewCount})</span>
+                <span className="sm:hidden">Reviews</span>
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="details" className="space-y-4">
