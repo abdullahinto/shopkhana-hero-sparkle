@@ -100,6 +100,7 @@ const Header = () => {
                     size="icon"
                     className="relative text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="Shopping Cart"
+                    onClick={() => window.location.href = '/cart'}
                   >
                     <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                     {cartItemCount > 0 && (
