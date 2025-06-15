@@ -106,7 +106,7 @@ const HeroSection = () => {
                 </div>
               </Link>
 
-              {/* Floating Product Badges */}
+              {/* Floating Product Badge - Single New Arrivals Tag */}
               <Link 
                 to="/shop?category=new-arrivals" 
                 className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg animate-bounce cursor-pointer transition-transform duration-200 hover:scale-110"
