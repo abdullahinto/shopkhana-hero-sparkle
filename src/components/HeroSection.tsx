@@ -95,27 +95,24 @@ const HeroSection = () => {
               {/* Glow Effect Behind Image */}
               <div className="absolute inset-0 bg-gradient-to-r from-shopkhana-yellow/20 to-pink-500/20 rounded-full blur-2xl sm:blur-3xl"></div>
               
-              {/* Hero Image Container - Completely Clean */}
-              <div className="relative z-10">
-                <Link to="/product/1" className="block">
-                  <div className="relative aspect-square rounded-full overflow-hidden border-2 sm:border-4 border-shopkhana-yellow/30 shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105">
-                    <img 
-                      src="/lovable-uploads/6b20cb18-35d7-4d2f-900a-559270431bd0.png"
-                      alt="Premium product showcase"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </Link>
-
-                {/* Single New Arrivals Badge */}
-                <div className="absolute top-4 right-4 z-20">
-                  <Link to="/shop?category=new-arrivals">
-                    <div className="bg-shopkhana-yellow text-black px-3 py-2 rounded-full font-poppins font-semibold text-sm shadow-lg animate-bounce cursor-pointer transition-transform duration-200 hover:scale-110">
-                      💄 New Arrivals
-                    </div>
-                  </Link>
+              {/* Hero Image - Premium Product */}
+              <Link to="/product/1" className="block relative z-10">
+                <div className="relative aspect-square rounded-full overflow-hidden border-2 sm:border-4 border-shopkhana-yellow/30 shadow-2xl cursor-pointer transition-transform duration-300 hover:scale-105">
+                  <img 
+                    src="/lovable-uploads/6b20cb18-35d7-4d2f-900a-559270431bd0.png"
+                    alt="Premium product showcase - click to view details"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </div>
+              </Link>
+
+              {/* Floating Product Badges */}
+              <Link 
+                to="/shop?category=new-arrivals" 
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg animate-bounce cursor-pointer transition-transform duration-200 hover:scale-110"
+              >
+                💄 New Arrivals
+              </Link>
             </div>
           </div>
         </div>
