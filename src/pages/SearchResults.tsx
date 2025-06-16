@@ -151,7 +151,7 @@ const SearchResults = () => {
               <Checkbox
                 id={category}
                 checked={selectedCategories.includes(category)}
-                onCheckedChange={(checked) => handleCategoryChange(category, checked as boolean)}
+                onCheckedChange={(checked) => handleCategoryChange(category, checked === true)}
               />
               <label htmlFor={category} className="text-sm font-medium cursor-pointer">
                 {category}
@@ -170,7 +170,7 @@ const SearchResults = () => {
               <Checkbox
                 id={color}
                 checked={selectedColors.includes(color)}
-                onCheckedChange={(checked) => handleColorChange(color, checked as boolean)}
+                onCheckedChange={(checked) => handleColorChange(color, checked === true)}
               />
               <label htmlFor={color} className="text-sm font-medium cursor-pointer">
                 {color}
@@ -186,7 +186,7 @@ const SearchResults = () => {
           <Checkbox
             id="inStock"
             checked={inStockOnly}
-            onCheckedChange={setInStockOnly}
+            onCheckedChange={(checked) => setInStockOnly(checked === true)}
           />
           <label htmlFor="inStock" className="text-sm font-medium cursor-pointer">
             In Stock Only
