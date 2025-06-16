@@ -1,145 +1,105 @@
 
+import { Sparkles, Shirt, Gem, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Shirt, Gem, Handbag, ShoppingBag, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const categories = [
   {
-    id: "cosmetics",
     name: "Cosmetics",
-    subtext: "All that glitters ✨",
     icon: Sparkles,
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop&crop=center",
-    badge: "New"
+    description: "Lipsticks, foundations, eyeshadows & more",
+    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=300&fit=crop",
+    color: "bg-pink-100",
+    items: "200+ products"
   },
   {
-    id: "garments",
-    name: "Garments", 
-    subtext: "Your style, your story 💫",
+    name: "Garments",
     icon: Shirt,
-    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop&crop=center",
-    badge: null
+    description: "Trendy outfits, traditional wear & accessories",
+    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300&h=300&fit=crop",
+    color: "bg-purple-100",
+    items: "150+ products"
   },
   {
-    id: "jewelry",
     name: "Jewelry",
-    subtext: "Shine bright like you 💎",
     icon: Gem,
-    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop&crop=center",
-    badge: "Trending"
+    description: "Earrings, necklaces, bracelets & rings",
+    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=300&fit=crop",
+    color: "bg-yellow-100",
+    items: "100+ products"
   },
   {
-    id: "bags-accessories",
-    name: "Bags & Accessories",
-    subtext: "Complete your look 👜",
-    icon: Handbag,
-    image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop&crop=center",
-    badge: null
-  },
-  {
-    id: "footwear",
-    name: "Footwear",
-    subtext: "Step into confidence 👠",
-    icon: ShoppingBag,
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=400&h=300&fit=crop&crop=center",
-    badge: null
-  },
-  {
-    id: "under-999",
-    name: "Under 999 Deals",
-    subtext: "Budget-friendly glam 🔥",
-    icon: Zap,
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=400&h=300&fit=crop&crop=center",
-    badge: "Hot"
+    name: "Beauty",
+    icon: Heart,
+    description: "Skincare, haircare & wellness essentials",
+    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300&h=300&fit=crop",
+    color: "bg-rose-100",
+    items: "80+ products"
   }
 ];
 
 const ShopByCategories = () => {
   return (
-    <section className="py-16 px-4 bg-white">
-      <div className="container mx-auto max-w-7xl">
+    <section className="py-12 lg:py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold font-poppins text-black mb-4">
+          <h2 className="font-poppins font-bold text-3xl lg:text-5xl text-shopkhana-black mb-4">
             Shop by Categories
           </h2>
-          <p className="text-lg text-gray-600 font-inter">
-            Find what you love — faster.
+          <p className="font-inter text-gray-600 text-lg max-w-2xl mx-auto">
+            Discover our curated collection of beauty, fashion, and lifestyle products
           </p>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
-          {categories.map((category) => {
-            const IconComponent = category.icon;
-            return (
-              <Link 
-                key={category.id} 
-                to={`/shop?category=${category.id}`}
-                className="group block"
-              >
-                <Card className="relative overflow-hidden border-2 border-gray-100 hover:border-shopkhana-yellow transition-all duration-300 hover:shadow-xl hover:scale-105 h-full">
-                  {/* Badge */}
-                  {category.badge && (
-                    <div className="absolute top-3 right-3 bg-shopkhana-yellow text-black px-2 py-1 rounded-full text-xs font-semibold z-10">
-                      {category.badge}
-                    </div>
-                  )}
-                  
-                  <CardContent className="p-0 relative">
-                    {/* Image with Overlay */}
-                    <div className="relative h-32 md:h-40 overflow-hidden">
-                      <img 
-                        src={category.image} 
-                        alt={category.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      {/* Icon Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="bg-shopkhana-yellow/90 p-3 rounded-full">
-                          <IconComponent className="w-6 h-6 text-black" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-4 text-center">
-                      <h3 className="font-poppins font-semibold text-lg md:text-xl text-black mb-2 group-hover:text-shopkhana-yellow transition-colors duration-300">
-                        {category.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 font-inter mb-3">
-                        {category.subtext}
-                      </p>
-                      
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="border-shopkhana-yellow text-black hover:bg-shopkhana-yellow hover:text-black transition-colors duration-300 font-medium"
-                      >
-                        Browse
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* View All Categories CTA */}
-        <div className="text-center mt-12">
-          <Link to="/shop">
-            <Button 
-              size="lg"
-              className="bg-shopkhana-yellow text-black hover:bg-shopkhana-yellow/90 font-semibold px-8 py-3 text-lg"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((category, index) => (
+            <Card 
+              key={category.name}
+              className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white"
             >
-              View All Categories
-            </Button>
-          </Link>
+              <CardContent className="p-0">
+                {/* Image Container */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  
+                  {/* Icon */}
+                  <div className={`absolute top-4 right-4 p-2 rounded-full ${category.color}`}>
+                    <category.icon className="h-5 w-5 text-gray-700" />
+                  </div>
+
+                  {/* Content Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <h3 className="font-poppins font-bold text-xl mb-1">
+                      {category.name}
+                    </h3>
+                    <p className="font-inter text-sm text-gray-200 mb-2">
+                      {category.description}
+                    </p>
+                    <p className="font-inter text-xs text-shopkhana-yellow font-medium">
+                      {category.items}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Action */}
+                <div className="p-4">
+                  <Button 
+                    className="w-full bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-semibold"
+                  >
+                    Explore {category.name}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
