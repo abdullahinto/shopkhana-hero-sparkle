@@ -48,7 +48,10 @@ const EmailOptIn = () => {
 
             {/* Headlines */}
             <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl text-shopkhana-black mb-4">
-              Unlock <span className="bg-shopkhana-yellow text-shopkhana-black px-2 rounded">10% OFF</span> Your First Order 🎁
+              Unlock <span className="relative inline-block">
+                <span className="absolute inset-0 bg-shopkhana-yellow transform rotate-2 rounded-full scale-110 opacity-90"></span>
+                <span className="relative text-shopkhana-black px-3 py-1">10% OFF</span>
+              </span> Your First Order 🎁
             </h2>
             
             <p className="font-inter text-lg sm:text-xl text-gray-600 mb-2 max-w-2xl mx-auto">
@@ -56,7 +59,10 @@ const EmailOptIn = () => {
             </p>
             
             <p className="font-poppins font-semibold text-shopkhana-black mb-8">
-              Join <span className="bg-shopkhana-yellow text-shopkhana-black px-2 rounded">2,000+ Stylish Women</span> & Get Exclusive Offers
+              Join <span className="relative inline-block">
+                <span className="absolute inset-0 bg-shopkhana-yellow transform -rotate-1 rounded-full scale-110 opacity-90"></span>
+                <span className="relative text-shopkhana-black px-3 py-1">2,000+ Stylish Women</span>
+              </span> & Get Exclusive Offers
             </p>
 
             {/* Email Form */}
