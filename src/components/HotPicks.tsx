@@ -113,15 +113,15 @@ const HotPicks = () => {
             This Week's 
           </h2>
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
-            <span className="text-shopkhana-yellow">Hot Picks</span> 🔥
+            <span className="bg-shopkhana-yellow text-shopkhana-black px-2 rounded">Hot Picks</span> 🔥
           </h3>
           <p className="font-inter text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-4">
             Trending products that our beauty community is absolutely obsessing over
           </p>
-          <div className="flex items-center justify-center gap-2 text-shopkhana-yellow">
-            <Heart className="w-5 h-5 fill-shopkhana-yellow" />
+          <div className="flex items-center justify-center gap-2 text-shopkhana-black">
+            <Heart className="w-5 h-5 fill-shopkhana-yellow text-shopkhana-yellow" />
             <span className="font-poppins font-semibold text-lg">Loved by 2,000+ Women</span>
-            <Heart className="w-5 h-5 fill-shopkhana-yellow" />
+            <Heart className="w-5 h-5 fill-shopkhana-yellow text-shopkhana-yellow" />
           </div>
         </div>
 

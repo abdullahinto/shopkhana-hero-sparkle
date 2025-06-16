@@ -70,15 +70,15 @@ const Testimonials = () => {
             Real Love from 
           </h2>
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
-            Real <span className="text-shopkhana-yellow">Women</span>
+            Real <span className="bg-shopkhana-yellow text-shopkhana-black px-2 rounded">Women</span>
           </h3>
           <p className="font-inter text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-4">
             Don't just take our word for it — see what our amazing customers are saying
           </p>
-          <div className="flex items-center justify-center gap-2 text-shopkhana-yellow">
-            <Heart className="w-5 h-5 fill-shopkhana-yellow" />
+          <div className="flex items-center justify-center gap-2 text-shopkhana-black">
+            <Heart className="w-5 h-5 fill-shopkhana-yellow text-shopkhana-yellow" />
             <span className="font-poppins font-semibold text-lg">2,000+ Happy Shoppers and Counting!</span>
-            <Heart className="w-5 h-5 fill-shopkhana-yellow" />
+            <Heart className="w-5 h-5 fill-shopkhana-yellow text-shopkhana-yellow" />
           </div>
         </div>
 
@@ -177,7 +177,7 @@ const Testimonials = () => {
             <p className="font-inter text-gray-600 mb-4">
               Share your glam moments and tag us for a chance to be featured!
             </p>
-            <p className="font-poppins font-semibold text-shopkhana-yellow text-lg">
+            <p className="font-poppins font-semibold bg-shopkhana-yellow text-shopkhana-black px-3 py-1 rounded text-lg inline-block">
               @shopkhana_official ✨
             </p>
           </div>
