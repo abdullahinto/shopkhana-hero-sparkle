@@ -6,10 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import AuthModal from "./AuthModal";
+import SearchOverlay from "./SearchOverlay";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const cartItemCount = 3;
   const wishlistItemCount = 2;
@@ -66,6 +68,7 @@ const Header = () => {
                     size="icon"
                     className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
                     aria-label="Search"
+                    onClick={() => setIsSearchOpen(true)}
                   >
                     <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
@@ -230,6 +233,12 @@ const Header = () => {
         {/* Bottom glow effect */}
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-shopkhana-yellow to-transparent opacity-50"></div>
       </header>
+
+      {/* Search Overlay */}
+      <SearchOverlay 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+      />
 
       {/* Auth Modal */}
       <AuthModal

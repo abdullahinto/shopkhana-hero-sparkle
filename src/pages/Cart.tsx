@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { Minus, Plus, Trash2, ArrowRight, Lock, Truck, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import TrustIndicators from '@/components/TrustIndicators';
 
 const Cart = () => {
@@ -60,6 +61,7 @@ const Cart = () => {
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-white">
+        <Header />
         <div className="container py-8 lg:py-16">
           <div className="text-center max-w-md mx-auto">
             <div className="text-6xl mb-6">🛍️</div>
@@ -77,12 +79,15 @@ const Cart = () => {
             </Button>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Header />
+      
       {/* Header */}
       <div className="bg-white border-b">
         <div className="container py-6 lg:py-8">
@@ -281,6 +286,8 @@ const Cart = () => {
 
       {/* Mobile bottom spacing */}
       <div className="lg:hidden h-20"></div>
+      
+      <Footer />
     </div>
   );
 };
