@@ -49,7 +49,7 @@ const FinalCTA = () => {
 
           {/* Trust indicator */}
           <div className="mt-6 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-            <p className="font-inter text-sm text-gray-400">
+            <p className="font-inter text-sm text-gray-300">
               ✨ Free shipping on orders over PKR 2,000 • 30-day returns
             </p>
           </div>

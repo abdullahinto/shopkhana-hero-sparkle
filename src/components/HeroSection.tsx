@@ -17,13 +17,13 @@ const HeroSection = () => {
             
             {/* Trust Badges */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-4 sm:mb-6">
-              <Badge variant="outline" className="border-shopkhana-yellow text-shopkhana-yellow font-inter text-xs">
+              <Badge variant="outline" className="border-shopkhana-yellow bg-shopkhana-yellow text-shopkhana-black font-inter text-xs font-semibold">
                 ✨ Cash on Delivery
               </Badge>
-              <Badge variant="outline" className="border-shopkhana-yellow text-shopkhana-yellow font-inter text-xs">
+              <Badge variant="outline" className="border-shopkhana-yellow bg-shopkhana-yellow text-shopkhana-black font-inter text-xs font-semibold">
                 🚚 Fast Delivery
               </Badge>
-              <Badge variant="outline" className="border-shopkhana-yellow text-shopkhana-yellow font-inter text-xs sm:block hidden">
+              <Badge variant="outline" className="border-shopkhana-yellow bg-shopkhana-yellow text-shopkhana-black font-inter text-xs font-semibold sm:block hidden">
                 🔄 7-Day Returns
               </Badge>
             </div>
@@ -53,7 +53,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4 px-2 lg:px-0">
               <Button 
                 size="lg" 
-                className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-black font-poppins font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25"
+                className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25"
               >
                 Shop Trending Picks 🛍️
               </Button>
@@ -61,7 +61,7 @@ const HeroSection = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-shopkhana-yellow text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-black font-poppins font-semibold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105"
+                className="border-2 border-shopkhana-yellow bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-poppins font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 h-auto rounded-full transition-all duration-300 hover:scale-105"
               >
                 Get 10% OFF First Order 🎉
               </Button>
@@ -71,17 +71,17 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-6 pt-4 sm:pt-6 px-2 lg:px-0">
               <div className="text-center">
                 <div className="font-poppins font-bold text-xl sm:text-2xl text-shopkhana-yellow">10K+</div>
-                <div className="font-inter text-xs sm:text-sm text-gray-400">Happy Customers</div>
+                <div className="font-inter text-xs sm:text-sm text-gray-300">Happy Customers</div>
               </div>
               <div className="hidden sm:block w-px h-6 bg-gray-600"></div>
               <div className="text-center">
                 <div className="font-poppins font-bold text-xl sm:text-2xl text-shopkhana-yellow">500+</div>
-                <div className="font-inter text-xs sm:text-sm text-gray-400">Trending Products</div>
+                <div className="font-inter text-xs sm:text-sm text-gray-300">Trending Products</div>
               </div>
               <div className="hidden sm:block w-px h-6 bg-gray-600"></div>
               <div className="text-center">
                 <div className="font-poppins font-bold text-xl sm:text-2xl text-shopkhana-yellow">4.8★</div>
-                <div className="font-inter text-xs sm:text-sm text-gray-400">Customer Rating</div>
+                <div className="font-inter text-xs sm:text-sm text-gray-300">Customer Rating</div>
               </div>
             </div>
           </div>
@@ -102,11 +102,11 @@ const HeroSection = () => {
               </div>
 
               {/* Floating Product Badges */}
-              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg animate-bounce">
+              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-shopkhana-yellow text-shopkhana-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-bold text-xs sm:text-sm shadow-lg animate-bounce">
                 💄 New Arrivals
               </div>
               
-              <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 bg-black/80 text-shopkhana-yellow px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-semibold text-xs sm:text-sm shadow-lg border border-shopkhana-yellow/30">
+              <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 bg-shopkhana-yellow text-shopkhana-black px-2 sm:px-3 py-1 sm:py-2 rounded-full font-poppins font-bold text-xs sm:text-sm shadow-lg border border-shopkhana-yellow/30">
                 💍 Trending Now
               </div>
             </div>
@@ -115,9 +115,9 @@ const HeroSection = () => {
 
         {/* Scrolling Banner */}
         <div className="mt-8 sm:mt-12 lg:mt-16 overflow-hidden">
-          <div className="bg-shopkhana-yellow/10 border-y border-shopkhana-yellow/30 py-2 sm:py-3">
+          <div className="bg-shopkhana-yellow/20 border-y border-shopkhana-yellow py-2 sm:py-3">
             <div className="animate-pulse text-center px-4">
-              <p className="font-inter text-shopkhana-yellow font-medium text-xs sm:text-sm">
+              <p className="font-inter text-white font-bold text-xs sm:text-sm">
                 🔥 LIMITED TIME: Free shipping on orders above ₹1500 | 💎 New jewelry collection just dropped | 👗 Trending dresses 40% off
               </p>
             </div>

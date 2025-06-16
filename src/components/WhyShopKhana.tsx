@@ -48,7 +48,7 @@ const WhyShopKhana = () => {
             Why Thousands of Women
           </h2>
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
-            Love <span className="text-shopkhana-yellow">ShopKhana</span>
+            Love <span className="text-shopkhana-black bg-shopkhana-yellow px-2 rounded">ShopKhana</span>
           </h3>
           <p className="font-inter text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Experience the difference that makes us Pakistan's most trusted beauty & fashion destination
@@ -77,7 +77,7 @@ const WhyShopKhana = () => {
                   <h4 className="font-poppins font-bold text-lg sm:text-xl text-shopkhana-black mb-2">
                     {benefit.title}
                   </h4>
-                  <p className="font-poppins font-semibold text-sm sm:text-base text-shopkhana-yellow mb-3">
+                  <p className="font-poppins font-bold text-sm sm:text-base text-shopkhana-black bg-shopkhana-yellow px-2 py-1 rounded mb-3 inline-block">
                     {benefit.subtitle}
                   </p>
                   <p className="font-inter text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -92,13 +92,13 @@ const WhyShopKhana = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-12 sm:mt-16">
           <p className="font-inter text-lg sm:text-xl text-gray-700 mb-6">
-            Ready to experience the <span className="font-poppins font-semibold text-shopkhana-yellow">ShopKhana difference</span>?
+            Ready to experience the <span className="font-poppins font-bold text-shopkhana-black bg-shopkhana-yellow px-2 rounded">ShopKhana difference</span>?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-semibold text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25">
+            <button className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-bold text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25">
               Start Shopping Now ✨
             </button>
-            <button className="border-2 border-shopkhana-yellow text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-shopkhana-black font-poppins font-semibold text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-105">
+            <button className="border-2 border-shopkhana-black bg-shopkhana-black text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-shopkhana-black font-poppins font-bold text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-105">
               Join 2,000+ Happy Customers 💖
             </button>
           </div>
