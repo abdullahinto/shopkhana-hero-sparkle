@@ -49,8 +49,12 @@ const EmailOptIn = () => {
             {/* Headlines */}
             <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl text-shopkhana-black mb-4">
               Unlock <span className="relative inline-block">
-                <span className="absolute inset-0 bg-shopkhana-yellow transform rotate-2 rounded-full scale-110 opacity-90"></span>
-                <span className="relative text-shopkhana-black px-3 py-1">10% OFF</span>
+                <span className="absolute inset-0 bg-shopkhana-yellow transform rotate-2 rounded-full scale-110 opacity-90 shadow-lg"
+                      style={{
+                        borderRadius: '38% 62% 55% 45% / 75% 25% 75% 25%',
+                        filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.1))'
+                      }}></span>
+                <span className="relative text-shopkhana-black px-3 py-1 font-bold">10% OFF</span>
               </span> Your First Order 🎁
             </h2>
             
@@ -60,8 +64,12 @@ const EmailOptIn = () => {
             
             <p className="font-poppins font-semibold text-shopkhana-black mb-8">
               Join <span className="relative inline-block">
-                <span className="absolute inset-0 bg-shopkhana-yellow transform -rotate-1 rounded-full scale-110 opacity-90"></span>
-                <span className="relative text-shopkhana-black px-3 py-1">2,000+ Stylish Women</span>
+                <span className="absolute inset-0 bg-shopkhana-yellow transform -rotate-1 rounded-full scale-110 opacity-90 shadow-lg"
+                      style={{
+                        borderRadius: '45% 55% 38% 62% / 25% 75% 25% 75%',
+                        filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.1))'
+                      }}></span>
+                <span className="relative text-shopkhana-black px-3 py-1 font-bold">2,000+ Stylish Women</span>
               </span> & Get Exclusive Offers
             </p>
 

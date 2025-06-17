@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,6 +21,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, Lock, CreditCard, Truck, MapPin, Edit3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -59,6 +59,8 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Header />
+      
       <div className="container mx-auto px-4 py-6 lg:py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">

@@ -71,8 +71,12 @@ const Testimonials = () => {
           </h2>
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
             Real <span className="relative inline-block">
-              <span className="absolute inset-0 bg-shopkhana-yellow transform rotate-1 rounded-full scale-110 opacity-90"></span>
-              <span className="relative text-shopkhana-black px-4 py-1">Women</span>
+              <span className="absolute inset-0 bg-shopkhana-yellow transform rotate-1 rounded-full scale-110 opacity-90 shadow-lg"
+                    style={{
+                      borderRadius: '55% 45% 38% 62% / 75% 25% 25% 75%',
+                      filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.1))'
+                    }}></span>
+              <span className="relative text-shopkhana-black px-4 py-1 font-bold">Women</span>
             </span>
           </h3>
           <p className="font-inter text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-4">
@@ -181,7 +185,11 @@ const Testimonials = () => {
               Share your glam moments and tag us for a chance to be featured!
             </p>
             <p className="relative inline-block">
-              <span className="absolute inset-0 bg-shopkhana-yellow transform -rotate-1 rounded-full scale-110 opacity-90"></span>
+              <span className="absolute inset-0 bg-shopkhana-yellow transform -rotate-1 rounded-full scale-110 opacity-90 shadow-lg"
+                    style={{
+                      borderRadius: '62% 38% 45% 55% / 25% 75% 75% 25%',
+                      filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.1))'
+                    }}></span>
               <span className="relative font-poppins font-semibold text-shopkhana-black px-4 py-2 text-lg">
                 @shopkhana_official ✨
               </span>

@@ -2,6 +2,7 @@
 import { Sparkles, Shirt, Gem, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -39,6 +40,8 @@ const categories = [
 ];
 
 const ShopByCategories = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-12 lg:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -93,6 +96,7 @@ const ShopByCategories = () => {
                 <div className="p-4">
                   <Button 
                     className="w-full bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-semibold"
+                    onClick={() => navigate('/shop')}
                   >
                     Explore {category.name}
                   </Button>
@@ -100,6 +104,16 @@ const ShopByCategories = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Browse by Categories Button */}
+        <div className="text-center mt-12">
+          <Button 
+            onClick={() => navigate('/shop')}
+            className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-bold text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+          >
+            Browse by Categories
+          </Button>
         </div>
       </div>
     </section>
