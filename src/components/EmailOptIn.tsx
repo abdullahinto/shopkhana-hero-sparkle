@@ -48,20 +48,7 @@ const EmailOptIn = () => {
 
             {/* Headlines */}
             <h2 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl text-shopkhana-black mb-4">
-              Unlock <span className="relative inline-block">
-                <span 
-                  className="absolute inset-0 transform scale-110 opacity-60 -z-10"
-                  style={{
-                    backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    filter: 'hue-rotate(30deg) saturate(1.2) brightness(1.1)',
-                    borderRadius: '20px'
-                  }}
-                ></span>
-                <span className="relative text-shopkhana-black px-3 py-1 font-bold">10% OFF</span>
-              </span> Your First Order 🎁
+              Unlock <span className="text-shopkhana-yellow">10% OFF</span> Your First Order 🎁
             </h2>
             
             <p className="font-inter text-lg sm:text-xl text-gray-600 mb-2 max-w-2xl mx-auto">
@@ -69,20 +56,7 @@ const EmailOptIn = () => {
             </p>
             
             <p className="font-poppins font-semibold text-shopkhana-black mb-8">
-              Join <span className="relative inline-block">
-                <span 
-                  className="absolute inset-0 transform scale-110 opacity-60 -z-10"
-                  style={{
-                    backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    filter: 'hue-rotate(30deg) saturate(1.2) brightness(1.1)',
-                    borderRadius: '20px'
-                  }}
-                ></span>
-                <span className="relative text-shopkhana-black px-3 py-1 font-bold">2,000+ Stylish Women</span>
-              </span> & Get Exclusive Offers
+              Join <span className="text-shopkhana-yellow">2,000+ Stylish Women</span> & Get Exclusive Offers
             </p>
 
             {/* Email Form */}

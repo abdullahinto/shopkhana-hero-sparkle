@@ -48,20 +48,7 @@ const WhyShopKhana = () => {
             Why Thousands of Women
           </h2>
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
-            Love <span className="relative inline-block">
-              <span 
-                className="absolute inset-0 transform scale-110 opacity-60 -z-10"
-                style={{
-                  backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  filter: 'hue-rotate(30deg) saturate(1.2) brightness(1.1)',
-                  borderRadius: '20px'
-                }}
-              ></span>
-              <span className="relative text-shopkhana-black px-2 font-bold">ShopKhana</span>
-            </span>
+            Love <span className="text-shopkhana-black bg-shopkhana-yellow px-2 rounded">ShopKhana</span>
           </h3>
           <p className="font-inter text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Experience the difference that makes us Pakistan's most trusted beauty & fashion destination
@@ -90,21 +77,8 @@ const WhyShopKhana = () => {
                   <h4 className="font-poppins font-bold text-lg sm:text-xl text-shopkhana-black mb-2">
                     {benefit.title}
                   </h4>
-                  <p className="relative inline-block font-poppins font-bold text-sm sm:text-base mb-3">
-                    <span 
-                      className="absolute inset-0 transform scale-110 opacity-60 -z-10"
-                      style={{
-                        backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        filter: 'hue-rotate(30deg) saturate(1.2) brightness(1.1)',
-                        borderRadius: '15px'
-                      }}
-                    ></span>
-                    <span className="relative text-shopkhana-black px-2 py-1">
-                      {benefit.subtitle}
-                    </span>
+                  <p className="font-poppins font-bold text-sm sm:text-base text-shopkhana-black bg-shopkhana-yellow px-2 py-1 rounded mb-3 inline-block">
+                    {benefit.subtitle}
                   </p>
                   <p className="font-inter text-sm sm:text-base text-gray-600 leading-relaxed">
                     {benefit.description}
@@ -118,20 +92,7 @@ const WhyShopKhana = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-12 sm:mt-16">
           <p className="font-inter text-lg sm:text-xl text-gray-700 mb-6">
-            Ready to experience the <span className="relative inline-block font-poppins font-bold">
-              <span 
-                className="absolute inset-0 transform scale-110 opacity-60 -z-10"
-                style={{
-                  backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  filter: 'hue-rotate(30deg) saturate(1.2) brightness(1.1)',
-                  borderRadius: '15px'
-                }}
-              ></span>
-              <span className="relative text-shopkhana-black px-2">ShopKhana difference</span>
-            </span>?
+            Ready to experience the <span className="font-poppins font-bold text-shopkhana-black bg-shopkhana-yellow px-2 rounded">ShopKhana difference</span>?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button className="bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-poppins font-bold text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-shopkhana-yellow/25">

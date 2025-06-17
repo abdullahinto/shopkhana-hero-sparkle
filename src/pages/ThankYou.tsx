@@ -1,8 +1,8 @@
+
 import { Check, Package, Truck, Shield, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import Header from "@/components/Header";
 
 const ThankYou = () => {
   const navigate = useNavigate();
@@ -41,8 +41,6 @@ const ThankYou = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       {/* Confetti Background Effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-3 h-3 bg-yellow-400 rounded-full animate-bounce"></div>
