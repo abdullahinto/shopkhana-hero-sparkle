@@ -50,7 +50,7 @@ const WhyShopKhana = () => {
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
             Love <span className="relative inline-block">
               <span 
-                className="absolute inset-0 transform scale-110 opacity-90"
+                className="absolute inset-0 transform scale-110 opacity-60 -z-10"
                 style={{
                   backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
                   backgroundSize: 'cover',
@@ -92,7 +92,7 @@ const WhyShopKhana = () => {
                   </h4>
                   <p className="relative inline-block font-poppins font-bold text-sm sm:text-base mb-3">
                     <span 
-                      className="absolute inset-0 transform scale-110 opacity-90"
+                      className="absolute inset-0 transform scale-110 opacity-60 -z-10"
                       style={{
                         backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
                         backgroundSize: 'cover',
@@ -120,7 +120,7 @@ const WhyShopKhana = () => {
           <p className="font-inter text-lg sm:text-xl text-gray-700 mb-6">
             Ready to experience the <span className="relative inline-block font-poppins font-bold">
               <span 
-                className="absolute inset-0 transform scale-110 opacity-90"
+                className="absolute inset-0 transform scale-110 opacity-60 -z-10"
                 style={{
                   backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
                   backgroundSize: 'cover',

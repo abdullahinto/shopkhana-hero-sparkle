@@ -79,7 +79,7 @@ const HotPicks = () => {
           <h3 className="font-poppins font-bold text-3xl sm:text-4xl lg:text-5xl mb-6">
             <span className="relative inline-block">
               <span 
-                className="absolute inset-0 bg-shopkhana-yellow transform scale-110 opacity-90"
+                className="absolute inset-0 transform scale-110 opacity-60 -z-10"
                 style={{
                   backgroundImage: `url('/lovable-uploads/c28306f2-b3f2-4e0d-b56c-9bf0684053d7.png')`,
                   backgroundSize: 'cover',
