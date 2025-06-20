@@ -1,12 +1,14 @@
 
 import { useState } from "react";
-import { Search, ShoppingCart, Menu, X, User, Heart } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, User, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import AuthModal from "./AuthModal";
 import SearchOverlay from "./SearchOverlay";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +17,8 @@ const Header = () => {
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const cartItemCount = 3;
   const wishlistItemCount = 2;
+
+  const { user, signOut, loading } = useAuth();
 
   const navigationLinks = [
     { name: "Home", href: "/" },
@@ -26,6 +30,10 @@ const Header = () => {
   const handleAuthClick = (mode: "login" | "signup") => {
     setAuthMode(mode);
     setIsAuthModalOpen(true);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
   };
 
   return (
@@ -130,23 +138,64 @@ const Header = () => {
                 </TooltipContent>
               </Tooltip>
 
-              {/* Profile Icon */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
-                    aria-label="My Account"
-                    onClick={() => handleAuthClick("login")}
-                  >
-                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Sign In</p>
-                </TooltipContent>
-              </Tooltip>
+              {/* Profile Icon - Shows different UI based on auth state */}
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
+                      aria-label="My Account"
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">My Account</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      Profile Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Order History
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      My Addresses
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-white hover:text-shopkhana-yellow hover:bg-shopkhana-yellow/10 transition-colors duration-200 h-8 w-8 sm:h-10 sm:w-10"
+                      aria-label="Sign In"
+                      onClick={() => handleAuthClick("login")}
+                      disabled={loading}
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Sign In</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
 
               {/* Mobile Menu */}
               <div className="lg:hidden">
@@ -193,27 +242,51 @@ const Header = () => {
                         ))}
                       </nav>
 
-                      {/* Mobile Auth Buttons */}
+                      {/* Mobile Auth Section */}
                       <div className="space-y-3 py-6 border-t border-shopkhana-yellow/20">
-                        <Button
-                          onClick={() => {
-                            handleAuthClick("login");
-                            setIsOpen(false);
-                          }}
-                          className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-inter font-semibold"
-                        >
-                          Sign In
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            handleAuthClick("signup");
-                            setIsOpen(false);
-                          }}
-                          variant="outline"
-                          className="w-full border-shopkhana-yellow text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-shopkhana-black font-inter font-semibold"
-                        >
-                          Sign Up
-                        </Button>
+                        {user ? (
+                          <>
+                            <div className="text-white px-4 py-2">
+                              <p className="text-sm text-gray-300">Signed in as</p>
+                              <p className="font-semibold">{user.email}</p>
+                            </div>
+                            <Button
+                              onClick={() => {
+                                handleSignOut();
+                                setIsOpen(false);
+                              }}
+                              variant="outline"
+                              className="w-full border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-inter font-semibold"
+                            >
+                              <LogOut className="mr-2 h-4 w-4" />
+                              Sign Out
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              onClick={() => {
+                                handleAuthClick("login");
+                                setIsOpen(false);
+                              }}
+                              className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-inter font-semibold"
+                              disabled={loading}
+                            >
+                              Sign In
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                handleAuthClick("signup");
+                                setIsOpen(false);
+                              }}
+                              variant="outline"
+                              className="w-full border-shopkhana-yellow text-shopkhana-yellow hover:bg-shopkhana-yellow hover:text-shopkhana-black font-inter font-semibold"
+                              disabled={loading}
+                            >
+                              Sign Up
+                            </Button>
+                          </>
+                        )}
                       </div>
 
                       {/* Mobile Menu Footer */}

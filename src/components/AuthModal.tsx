@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -15,12 +17,15 @@ interface AuthModalProps {
 const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) => {
   const [mode, setMode] = useState<"login" | "signup">(initialMode);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const { signIn, signUp, resetPassword } = useAuth();
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -35,7 +40,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
@@ -57,12 +62,44 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Simulate successful auth
-      console.log(`${mode} successful:`, formData);
-      onClose();
-      // Reset form
-      setFormData({ name: "", email: "", password: "" });
+      setIsLoading(true);
+      
+      try {
+        let result;
+        if (mode === "signup") {
+          result = await signUp(formData.email, formData.password, formData.name);
+        } else {
+          result = await signIn(formData.email, formData.password);
+        }
+
+        if (!result.error) {
+          onClose();
+          // Reset form
+          setFormData({ name: "", email: "", password: "" });
+          setErrors({});
+        }
+      } catch (error) {
+        console.error('Auth error:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!formData.email.trim()) {
+      setErrors({ email: "Please enter your email address" });
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      setErrors({ email: "Please enter a valid email address" });
+      return;
+    }
+
+    setIsLoading(true);
+    await resetPassword(formData.email);
+    setIsLoading(false);
   };
 
   const switchMode = () => {
@@ -109,6 +146,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
                 className={`font-inter focus:ring-2 focus:ring-shopkhana-yellow focus:border-shopkhana-yellow transition-colors ${
                   errors.name ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""
                 }`}
+                disabled={isLoading}
               />
               {errors.name && (
                 <p className="text-sm text-red-500 font-inter">{errors.name}</p>
@@ -130,6 +168,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
               className={`font-inter focus:ring-2 focus:ring-shopkhana-yellow focus:border-shopkhana-yellow transition-colors ${
                 errors.email ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""
               }`}
+              disabled={isLoading}
             />
             {errors.email && (
               <p className="text-sm text-red-500 font-inter">{errors.email}</p>
@@ -151,11 +190,13 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
                 className={`font-inter pr-10 focus:ring-2 focus:ring-shopkhana-yellow focus:border-shopkhana-yellow transition-colors ${
                   errors.password ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""
                 }`}
+                disabled={isLoading}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                disabled={isLoading}
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4" />
@@ -174,7 +215,9 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
             <div className="text-right">
               <button
                 type="button"
+                onClick={handleForgotPassword}
                 className="font-inter text-sm text-shopkhana-black hover:text-shopkhana-yellow transition-colors underline"
+                disabled={isLoading}
               >
                 Forgot Password?
               </button>
@@ -185,8 +228,9 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
           <Button
             type="submit"
             className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black font-inter font-semibold py-3 text-base transition-colors"
+            disabled={isLoading}
           >
-            {mode === "login" ? "Log In" : "Sign Up"}
+            {isLoading ? "Please wait..." : (mode === "login" ? "Log In" : "Sign Up")}
           </Button>
 
           {/* Google Auth Button (Placeholder) */}
@@ -194,6 +238,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
             type="button"
             variant="outline"
             className="w-full font-inter font-medium py-3 text-base border-gray-300 hover:bg-gray-50 transition-colors"
+            disabled={isLoading}
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -212,6 +257,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = "login" }: AuthModalProps) =
                 type="button"
                 onClick={switchMode}
                 className="text-shopkhana-black hover:text-shopkhana-yellow font-semibold transition-colors underline"
+                disabled={isLoading}
               >
                 {mode === "login" ? "Sign up" : "Log in"}
               </button>
