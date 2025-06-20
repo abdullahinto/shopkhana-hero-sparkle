@@ -2,43 +2,74 @@
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductActionButtonsProps {
   inStock: boolean;
   isWishlisted: boolean;
   setIsWishlisted: (wishlisted: boolean) => void;
+  productId?: string;
+  productName?: string;
+  productVariant?: string;
+  productPrice?: number;
+  productImage?: string;
 }
 
 const ProductActionButtons = ({ 
   inStock, 
   isWishlisted, 
-  setIsWishlisted 
+  setIsWishlisted,
+  productId = "1",
+  productName = "Product",
+  productVariant = "Default",
+  productPrice = 999,
+  productImage = "/placeholder.svg"
 }: ProductActionButtonsProps) => {
   const navigate = useNavigate();
+  const { addToCart, loading } = useCart();
 
-  const handleBuyNow = () => {
-    // In a real app, you'd add the item to cart first, then navigate to checkout
+  const handleBuyNow = async () => {
+    await addToCart({
+      product_id: productId,
+      product_name: productName,
+      product_variant: productVariant,
+      product_price: productPrice,
+      product_image: productImage,
+      quantity: 1
+    });
     navigate('/checkout');
+  };
+
+  const handleAddToCart = async () => {
+    await addToCart({
+      product_id: productId,
+      product_name: productName,
+      product_variant: productVariant,
+      product_price: productPrice,
+      product_image: productImage,
+      quantity: 1
+    });
   };
 
   return (
     <div className="space-y-3">
       <Button
         size="lg"
-        disabled={!inStock}
+        disabled={!inStock || loading}
         onClick={handleBuyNow}
         className="w-full bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-semibold text-lg py-3 lg:py-4"
       >
-        Buy Now
+        {loading ? "Adding..." : "Buy Now"}
       </Button>
       
       <Button
         variant="outline"
         size="lg"
-        disabled={!inStock}
+        disabled={!inStock || loading}
+        onClick={handleAddToCart}
         className="w-full border-2 border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/10 font-semibold py-3 lg:py-4"
       >
-        Add to Cart
+        {loading ? "Adding..." : "Add to Cart"}
       </Button>
       
       <Button

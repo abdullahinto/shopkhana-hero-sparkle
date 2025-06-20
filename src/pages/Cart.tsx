@@ -1,64 +1,44 @@
-import React, { useState } from 'react';
-import { Minus, Plus, Trash2, ArrowRight, Lock, Truck, RotateCcw } from 'lucide-react';
+
+import React from 'react';
+import { Minus, Plus, Trash2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import TrustIndicators from '@/components/TrustIndicators';
+import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
 
 const Cart = () => {
   const navigate = useNavigate();
-  
-  // Mock cart state
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Matte Lipstick',
-      variant: 'Ruby Red',
-      price: 899,
-      quantity: 2,
-      image: '/placeholder.svg'
-    },
-    {
-      id: 2,
-      name: 'Gold Chain Necklace',
-      variant: '18" Length',
-      price: 2499,
-      quantity: 1,
-      image: '/placeholder.svg'
-    },
-    {
-      id: 3,
-      name: 'Floral Summer Dress',
-      variant: 'Size M, Yellow',
-      price: 1799,
-      quantity: 1,
-      image: '/placeholder.svg'
-    }
-  ]);
+  const { cartItems, updateCartItem, removeFromCart, loading } = useCart();
+  const { user } = useAuth();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      removeItem(id);
-      return;
-    }
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+  // Convert cart items to display format and calculate totals
+  const displayItems = cartItems.map(item => ({
+    id: item.product_id + (item.product_variant || ''),
+    productId: item.product_id,
+    name: item.product_name,
+    variant: item.product_variant || '',
+    price: item.product_price,
+    quantity: item.quantity,
+    image: item.product_image || '/placeholder.svg'
+  }));
+
+  const updateQuantity = async (productId: string, variant: string, newQuantity: number) => {
+    await updateCartItem(productId, variant || undefined, newQuantity);
   };
 
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+  const removeItem = async (productId: string, variant: string) => {
+    await removeFromCart(productId, variant || undefined);
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = displayItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const shipping = subtotal > 2000 ? 0 : 200;
   const total = subtotal + shipping;
 
   // Empty cart state
-  if (cartItems.length === 0) {
+  if (!loading && displayItems.length === 0) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -104,39 +84,92 @@ const Cart = () => {
             <div className="bg-white rounded-lg border">
               <div className="p-4 lg:p-6 border-b">
                 <h2 className="font-poppins text-xl font-semibold">
-                  Shopping Cart ({cartItems.length} items)
+                  Shopping Cart ({displayItems.length} items)
                 </h2>
               </div>
               
-              <div className="divide-y">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="p-4 lg:p-6">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      {/* Product Image */}
-                      <div className="w-full sm:w-24 h-48 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                        <img 
-                          src={item.image} 
-                          alt={item.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      
-                      {/* Product Info */}
-                      <div className="flex-1 space-y-2">
-                        <h3 className="font-medium text-lg">{item.name}</h3>
-                        <p className="text-gray-600 text-sm">{item.variant}</p>
-                        <p className="font-bold text-lg">Rs. {item.price}</p>
+              {loading ? (
+                <div className="p-8 text-center">
+                  <p className="text-gray-600">Loading your cart...</p>
+                </div>
+              ) : (
+                <div className="divide-y">
+                  {displayItems.map((item) => (
+                    <div key={item.id} className="p-4 lg:p-6">
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        {/* Product Image */}
+                        <div className="w-full sm:w-24 h-48 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                          <img 
+                            src={item.image} 
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                         
-                        {/* Mobile Quantity & Remove */}
-                        <div className="sm:hidden flex items-center justify-between pt-2">
+                        {/* Product Info */}
+                        <div className="flex-1 space-y-2">
+                          <h3 className="font-medium text-lg">{item.name}</h3>
+                          {item.variant && <p className="text-gray-600 text-sm">{item.variant}</p>}
+                          <p className="font-bold text-lg">Rs. {item.price}</p>
+                          
+                          {/* Mobile Quantity & Remove */}
+                          <div className="sm:hidden flex items-center justify-between pt-2">
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => updateQuantity(item.productId, item.variant, item.quantity - 1)}
+                                disabled={loading}
+                              >
+                                <Minus size={16} />
+                              </Button>
+                              <span className="font-medium text-lg w-8 text-center">
+                                {item.quantity}
+                              </span>
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() => updateQuantity(item.productId, item.variant, item.quantity + 1)}
+                                disabled={loading}
+                              >
+                                <Plus size={16} />
+                              </Button>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-red-500 hover:text-red-700 h-8 w-8"
+                              onClick={() => removeItem(item.productId, item.variant)}
+                              disabled={loading}
+                            >
+                              <Trash2 size={16} />
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        {/* Desktop Quantity & Remove */}
+                        <div className="hidden sm:flex flex-col items-end gap-4">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => removeItem(item.productId, item.variant)}
+                            disabled={loading}
+                          >
+                            <Trash2 size={18} />
+                          </Button>
+                          
                           <div className="flex items-center gap-3">
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-8 w-8"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="h-10 w-10"
+                              onClick={() => updateQuantity(item.productId, item.variant, item.quantity - 1)}
+                              disabled={loading}
                             >
-                              <Minus size={16} />
+                              <Minus size={18} />
                             </Button>
                             <span className="font-medium text-lg w-8 text-center">
                               {item.quantity}
@@ -144,71 +177,30 @@ const Cart = () => {
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-8 w-8"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="h-10 w-10"
+                              onClick={() => updateQuantity(item.productId, item.variant, item.quantity + 1)}
+                              disabled={loading}
                             >
-                              <Plus size={16} />
+                              <Plus size={18} />
                             </Button>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-red-500 hover:text-red-700 h-8 w-8"
-                            onClick={() => removeItem(item.id)}
-                          >
-                            <Trash2 size={16} />
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      {/* Desktop Quantity & Remove */}
-                      <div className="hidden sm:flex flex-col items-end gap-4">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => removeItem(item.id)}
-                        >
-                          <Trash2 size={18} />
-                        </Button>
-                        
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-10 w-10"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          >
-                            <Minus size={18} />
-                          </Button>
-                          <span className="font-medium text-lg w-8 text-center">
-                            {item.quantity}
-                          </span>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-10 w-10"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          >
-                            <Plus size={18} />
-                          </Button>
+                          
+                          <p className="font-bold text-lg">
+                            Rs. {item.price * item.quantity}
+                          </p>
                         </div>
                         
-                        <p className="font-bold text-lg">
-                          Rs. {item.price * item.quantity}
-                        </p>
-                      </div>
-                      
-                      {/* Mobile Total */}
-                      <div className="sm:hidden text-right">
-                        <p className="font-bold text-lg">
-                          Total: Rs. {item.price * item.quantity}
-                        </p>
+                        {/* Mobile Total */}
+                        <div className="sm:hidden text-right">
+                          <p className="font-bold text-lg">
+                            Total: Rs. {item.price * item.quantity}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -245,6 +237,7 @@ const Cart = () => {
               <Button 
                 onClick={() => navigate('/checkout')}
                 className="w-full mt-6 bg-[#FFE75E] hover:bg-[#FFE75E]/90 text-black font-semibold py-3"
+                disabled={loading || displayItems.length === 0}
               >
                 Proceed to Checkout
                 <ArrowRight className="ml-2" size={18} />
@@ -271,12 +264,13 @@ const Cart = () => {
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-sm text-gray-600">Total ({cartItems.length} items)</p>
+            <p className="text-sm text-gray-600">Total ({displayItems.length} items)</p>
             <p className="font-bold text-lg">Rs. {total}</p>
           </div>
           <Button 
             onClick={() => navigate('/checkout')}
             className="bg-[#FFE75E] hover:bg-[#FFE75E]/90 text-black font-semibold px-6 py-3"
+            disabled={loading || displayItems.length === 0}
           >
             Checkout
             <ArrowRight className="ml-2" size={16} />

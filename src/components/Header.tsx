@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, ShoppingCart, Menu, X, User, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,13 +8,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import AuthModal from "./AuthModal";
 import SearchOverlay from "./SearchOverlay";
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
-  const cartItemCount = 3;
+  const { cartCount } = useCart();
   const wishlistItemCount = 2;
 
   const { user, signOut, loading } = useAuth();
@@ -123,12 +123,12 @@ const Header = () => {
                     onClick={() => window.location.href = '/cart'}
                   >
                     <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-                    {cartItemCount > 0 && (
+                    {cartCount > 0 && (
                       <Badge 
                         variant="destructive" 
                         className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-xs bg-shopkhana-yellow text-shopkhana-black font-bold"
                       >
-                        {cartItemCount}
+                        {cartCount}
                       </Badge>
                     )}
                   </Button>

@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "@/hooks/useCart";
 
 interface Product {
+  id?: string;
   name: string;
   price: number;
   inStock: boolean;
+  image?: string;
 }
 
 interface StickyAddToCartProps {
@@ -17,6 +20,7 @@ interface StickyAddToCartProps {
 
 const StickyAddToCart = ({ product, selectedVariant, quantity }: StickyAddToCartProps) => {
   const navigate = useNavigate();
+  const { addToCart, loading } = useCart();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -32,8 +36,27 @@ const StickyAddToCart = ({ product, selectedVariant, quantity }: StickyAddToCart
 
   const formatPrice = (price: number) => `Rs. ${price.toLocaleString()}`;
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
+    await addToCart({
+      product_id: product.id || "1",
+      product_name: product.name,
+      product_variant: selectedVariant,
+      product_price: product.price,
+      product_image: product.image || "/placeholder.svg",
+      quantity: quantity
+    });
     navigate('/checkout');
+  };
+
+  const handleAddToCart = async () => {
+    await addToCart({
+      product_id: product.id || "1",
+      product_name: product.name,
+      product_variant: selectedVariant,
+      product_price: product.price,
+      product_image: product.image || "/placeholder.svg",
+      quantity: quantity
+    });
   };
 
   return (
@@ -57,20 +80,21 @@ const StickyAddToCart = ({ product, selectedVariant, quantity }: StickyAddToCart
       <div className="flex gap-3">
         <Button
           size="lg"
-          disabled={!product.inStock}
+          disabled={!product.inStock || loading}
           onClick={handleBuyNow}
           className="flex-1 bg-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/90 font-semibold"
         >
-          Buy Now
+          {loading ? "Adding..." : "Buy Now"}
         </Button>
         
         <Button
           variant="outline"
           size="lg"
-          disabled={!product.inStock}
+          disabled={!product.inStock || loading}
+          onClick={handleAddToCart}
           className="flex-1 border-shopkhana-yellow text-shopkhana-black hover:bg-shopkhana-yellow/10 font-semibold"
         >
-          Add to Cart
+          {loading ? "Adding..." : "Add to Cart"}
         </Button>
       </div>
     </div>
