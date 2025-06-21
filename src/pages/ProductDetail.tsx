@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 
 // Mock product data
 const getProductById = (id: string) => ({
-  id: parseInt(id),
+  id: id, // Changed to string
   name: "Luxe Rose Gold Necklace Set",
   price: 4500,
   originalPrice: 6000,
@@ -159,7 +159,7 @@ const ProductDetail = () => {
         </div>
 
         {/* You May Also Like */}
-        <YouMayAlsoLike currentProductId={product.id} />
+        <YouMayAlsoLike currentProductId={parseInt(product.id)} />
       </div>
 
       {/* Sticky Add to Cart for Mobile */}

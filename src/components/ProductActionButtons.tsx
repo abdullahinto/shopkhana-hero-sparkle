@@ -3,11 +3,10 @@ import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
+import { useWishlist } from "@/hooks/useWishlist";
 
 interface ProductActionButtonsProps {
   inStock: boolean;
-  isWishlisted: boolean;
-  setIsWishlisted: (wishlisted: boolean) => void;
   productId?: string;
   productName?: string;
   productVariant?: string;
@@ -17,8 +16,6 @@ interface ProductActionButtonsProps {
 
 const ProductActionButtons = ({ 
   inStock, 
-  isWishlisted, 
-  setIsWishlisted,
   productId = "1",
   productName = "Product",
   productVariant = "Default",
@@ -27,6 +24,9 @@ const ProductActionButtons = ({
 }: ProductActionButtonsProps) => {
   const navigate = useNavigate();
   const { addToCart, loading } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist, loading: wishlistLoading } = useWishlist();
+
+  const isWishlisted = isInWishlist(productId, productVariant);
 
   const handleBuyNow = async () => {
     await addToCart({
@@ -49,6 +49,20 @@ const ProductActionButtons = ({
       product_image: productImage,
       quantity: 1
     });
+  };
+
+  const handleWishlistToggle = async () => {
+    if (isWishlisted) {
+      await removeFromWishlist(productId, productVariant);
+    } else {
+      await addToWishlist({
+        product_id: productId,
+        product_name: productName,
+        product_variant: productVariant,
+        product_price: productPrice,
+        product_image: productImage,
+      });
+    }
   };
 
   return (
@@ -75,7 +89,8 @@ const ProductActionButtons = ({
       <Button
         variant="outline"
         size="lg"
-        onClick={() => setIsWishlisted(!isWishlisted)}
+        onClick={handleWishlistToggle}
+        disabled={wishlistLoading}
         className="w-full border-2 border-gray-300 hover:border-shopkhana-yellow hover:bg-shopkhana-yellow/10 py-3 lg:py-4"
       >
         <Heart 
@@ -83,7 +98,7 @@ const ProductActionButtons = ({
             isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'
           }`} 
         />
-        {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        {wishlistLoading ? 'Loading...' : (isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist')}
       </Button>
     </div>
   );

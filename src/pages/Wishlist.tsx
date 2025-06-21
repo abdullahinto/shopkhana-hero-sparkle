@@ -1,59 +1,16 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingCart, Trash2, Share2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
-
-interface WishlistItem {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  variant?: string;
-  rating: number;
-  stock: number;
-  inStock: boolean;
-}
+import { useWishlist } from "@/hooks/useWishlist";
+import { useCart } from "@/hooks/useCart";
 
 const Wishlist = () => {
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([
-    {
-      id: 1,
-      name: "Matte Liquid Lipstick Set",
-      price: 1299,
-      originalPrice: 1599,
-      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&h=400&fit=crop&crop=center",
-      variant: "Rose Collection - 6 Shades",
-      rating: 4.8,
-      stock: 2,
-      inStock: true
-    },
-    {
-      id: 2,
-      name: "Gold Statement Earrings",
-      price: 899,
-      originalPrice: 1199,
-      image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop&crop=center",
-      variant: "Gold Plated",
-      rating: 4.9,
-      stock: 12,
-      inStock: true
-    },
-    {
-      id: 3,
-      name: "Glow Serum Foundation",
-      price: 2199,
-      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=400&fit=crop&crop=center",
-      variant: "Shade: Medium Beige",
-      rating: 4.7,
-      stock: 0,
-      inStock: false
-    }
-  ]);
+  const { wishlistItems, removeFromWishlist, loading } = useWishlist();
+  const { addToCart, loading: cartLoading } = useCart();
 
   const formatPrice = (price: number) => {
     return `Rs. ${price.toLocaleString()}`;
@@ -85,19 +42,36 @@ const Wishlist = () => {
     return stars;
   };
 
-  const removeFromWishlist = (itemId: number) => {
-    setWishlistItems(items => items.filter(item => item.id !== itemId));
+  const handleRemoveFromWishlist = async (productId: string, productVariant?: string) => {
+    await removeFromWishlist(productId, productVariant);
   };
 
-  const addToCart = (itemId: number) => {
-    // Add to cart logic here
-    console.log(`Added item ${itemId} to cart`);
+  const handleAddToCart = async (item: any) => {
+    await addToCart({
+      product_id: item.product_id,
+      product_name: item.product_name,
+      product_variant: item.product_variant,
+      product_price: item.product_price,
+      product_image: item.product_image,
+      quantity: 1
+    });
   };
 
   const shareWishlist = () => {
     // Share wishlist logic here
     console.log("Sharing wishlist");
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="text-center">Loading your wishlist...</div>
+        </div>
+      </div>
+    );
+  }
 
   if (wishlistItems.length === 0) {
     return (
@@ -170,16 +144,16 @@ const Wishlist = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mb-12">
           {wishlistItems.map((item) => (
             <Card 
-              key={item.id}
+              key={`${item.product_id}-${item.product_variant || 'default'}`}
               className="group bg-white border-gray-200 hover:border-shopkhana-yellow/30 hover:shadow-lg transition-all duration-300 overflow-hidden"
             >
               <CardContent className="p-0">
                 {/* Product Image */}
                 <div className="relative overflow-hidden aspect-square">
-                  <Link to={`/product/${item.id}`}>
+                  <Link to={`/product/${item.product_id}`}>
                     <img 
-                      src={item.image} 
-                      alt={item.name}
+                      src={item.product_image || '/placeholder.svg'} 
+                      alt={item.product_name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </Link>
@@ -188,23 +162,11 @@ const Wishlist = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => removeFromWishlist(item.id)}
+                    onClick={() => handleRemoveFromWishlist(item.product_id, item.product_variant)}
                     className="absolute top-2 right-2 h-8 w-8 bg-white/90 hover:bg-white rounded-full shadow-sm"
                   >
                     <Trash2 className="h-4 w-4 text-gray-600 hover:text-red-500 transition-colors" />
                   </Button>
-
-                  {/* Stock Badge */}
-                  {!item.inStock && (
-                    <Badge className="absolute top-2 left-2 bg-red-500 text-white">
-                      Out of Stock
-                    </Badge>
-                  )}
-                  {item.inStock && item.stock <= 5 && (
-                    <Badge className="absolute top-2 left-2 bg-orange-500 text-white">
-                      Only {item.stock} left!
-                    </Badge>
-                  )}
                 </div>
 
                 {/* Product Info */}
@@ -212,51 +174,42 @@ const Wishlist = () => {
                   {/* Rating */}
                   <div className="flex items-center gap-1">
                     <div className="flex items-center">
-                      {renderStars(item.rating)}
+                      {renderStars(4.8)}
                     </div>
                     <span className="text-xs text-gray-500 ml-1">
-                      ({item.rating})
+                      (4.8)
                     </span>
                   </div>
 
                   {/* Product Name */}
-                  <Link to={`/product/${item.id}`}>
+                  <Link to={`/product/${item.product_id}`}>
                     <h3 className="font-poppins font-semibold text-shopkhana-black text-sm sm:text-base line-clamp-2 hover:text-shopkhana-yellow transition-colors">
-                      {item.name}
+                      {item.product_name}
                     </h3>
                   </Link>
 
                   {/* Variant */}
-                  {item.variant && (
+                  {item.product_variant && (
                     <p className="font-inter text-xs text-gray-500">
-                      {item.variant}
+                      {item.product_variant}
                     </p>
                   )}
 
                   {/* Price */}
                   <div className="flex items-center gap-2">
                     <span className="font-poppins font-bold text-shopkhana-black">
-                      {formatPrice(item.price)}
+                      {formatPrice(item.product_price)}
                     </span>
-                    {item.originalPrice && (
-                      <span className="font-inter text-sm text-gray-500 line-through">
-                        {formatPrice(item.originalPrice)}
-                      </span>
-                    )}
                   </div>
 
                   {/* Add to Cart Button */}
                   <Button 
-                    onClick={() => addToCart(item.id)}
-                    disabled={!item.inStock}
-                    className={`w-full font-poppins font-semibold text-sm py-2.5 transition-all duration-200 ${
-                      item.inStock 
-                        ? 'bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black hover:shadow-md' 
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
+                    onClick={() => handleAddToCart(item)}
+                    disabled={cartLoading}
+                    className="w-full bg-shopkhana-yellow hover:bg-shopkhana-yellow/90 text-shopkhana-black hover:shadow-md font-poppins font-semibold text-sm py-2.5 transition-all duration-200"
                   >
                     <ShoppingCart className="h-4 w-4 mr-2" />
-                    {item.inStock ? 'Add to Cart' : 'Out of Stock'}
+                    {cartLoading ? 'Adding...' : 'Add to Cart'}
                   </Button>
                 </div>
               </CardContent>
