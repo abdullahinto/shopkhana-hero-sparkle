@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "@/hooks/useCart";
 
 interface Product {
-  id?: string;
+  id?: number;
   name: string;
   price: number;
   inStock: boolean;
-  image?: string;
+  images?: string[];
 }
 
 interface StickyAddToCartProps {
@@ -38,11 +38,11 @@ const StickyAddToCart = ({ product, selectedVariant, quantity }: StickyAddToCart
 
   const handleBuyNow = async () => {
     await addToCart({
-      product_id: product.id || "1",
+      product_id: product.id?.toString() || "1",
       product_name: product.name,
       product_variant: selectedVariant,
       product_price: product.price,
-      product_image: product.image || "/placeholder.svg",
+      product_image: product.images?.[0] || "/placeholder.svg",
       quantity: quantity
     });
     navigate('/checkout');
@@ -50,11 +50,11 @@ const StickyAddToCart = ({ product, selectedVariant, quantity }: StickyAddToCart
 
   const handleAddToCart = async () => {
     await addToCart({
-      product_id: product.id || "1",
+      product_id: product.id?.toString() || "1",
       product_name: product.name,
       product_variant: selectedVariant,
       product_price: product.price,
-      product_image: product.image || "/placeholder.svg",
+      product_image: product.images?.[0] || "/placeholder.svg",
       quantity: quantity
     });
   };
