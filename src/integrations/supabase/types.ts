@@ -48,6 +48,134 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_id: string
+          product_image: string | null
+          product_name: string
+          product_price: number
+          product_variant: string | null
+          quantity: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_id: string
+          product_image?: string | null
+          product_name: string
+          product_price: number
+          product_variant?: string | null
+          quantity?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string
+          product_image?: string | null
+          product_name?: string
+          product_price?: number
+          product_variant?: string | null
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      orders: {
+        Row: {
+          billing_address: Json | null
+          created_at: string
+          id: string
+          notes: string | null
+          order_number: string
+          payment_method: string | null
+          payment_status: string | null
+          shipping_address: Json | null
+          status: string
+          total_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          billing_address?: Json | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_method?: string | null
+          payment_status?: string | null
+          shipping_address?: Json | null
+          status?: string
+          total_amount: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          billing_address?: Json | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_method?: string | null
+          payment_status?: string | null
+          shipping_address?: Json | null
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      product_reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          helpful_count: number | null
+          id: string
+          product_id: string
+          rating: number
+          title: string | null
+          updated_at: string
+          user_id: string
+          verified_purchase: boolean | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          product_id: string
+          rating: number
+          title?: string | null
+          updated_at?: string
+          user_id: string
+          verified_purchase?: boolean | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          helpful_count?: number | null
+          id?: string
+          product_id?: string
+          rating?: number
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+          verified_purchase?: boolean | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -113,7 +241,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_order_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
